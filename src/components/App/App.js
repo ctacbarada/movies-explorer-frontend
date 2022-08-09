@@ -10,6 +10,7 @@ function App () {
         <Header />
       }/>
       <Route path='/movies' />
+
       <Route path='/saved-movies' />
 
       <Route path='/profile' />
