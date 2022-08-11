@@ -21,7 +21,7 @@
   text-align: center;
 
   padding-top: 160px;
-  margin: 0 calc(100vw * (250 / 1280));
+  margin: 0 calc(100% * (235 / 1280));
 }
 
 @media screen and (max-width: 768px) {

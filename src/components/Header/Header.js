@@ -23,7 +23,7 @@ const headerWithoutLogin =
   </header>
 
 function Header() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   return (
     isUserLoggedIn ? headerWithLogin : headerWithoutLogin
