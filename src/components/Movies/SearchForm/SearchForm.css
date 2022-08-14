@@ -1,0 +1,115 @@
+.searchform {
+  width: calc(100vw * (1140 / 1280));
+  max-width: 1140px;
+  height: 222px;
+
+  border-bottom: 1px solid #E8E8E8;
+  box-sizing: border-box;
+
+  padding-top: 70px;
+  margin: 0 auto;
+}
+
+.searchform__form {
+  width: calc(100vw * (1140 / 1280));
+  max-width: 1140px;
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+
+  background-color: #FFFFFF;
+
+  border-bottom: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 10px;
+
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+
+  margin: 0 auto;
+}
+
+.searchform__icon {
+  width: calc(100vw * (34 / 1280));
+  min-width: 34px;
+  height: 34px;
+
+  background-image: url(../../../images/searchform__input_search-icon.svg);
+  background-repeat: no-repeat;
+
+  margin: 0 0 0 19px;
+}
+
+.searchform__input {
+  width: calc(100vw * (751 / 1280));
+  max-width: 751px;
+  height: 66px;
+
+  font-size: 18px;
+  line-height: 20px;
+  color: #A0A0A0;
+
+  background-color: #FFFFFF;
+
+  border-bottom: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 10px;
+
+  padding: 0;
+  margin: 0 1px 0 10px;
+}
+
+.searchform__button-confirm {
+  max-width: calc(100vw * (100 / 1280));
+  min-width: 100px;
+  height: 34px;
+
+  background-image: url(../../../images/searchform__button-confirm.svg);
+  background-repeat: no-repeat;
+  background-color: #FFFFFF;
+
+  border-bottom: none;
+  border-top: none;
+  border-left: none;
+  border-right: 1px solid #CBCBCB;
+
+  padding: 0;
+  margin: 0;
+}
+
+.searchform__button-confirm:hover {
+  cursor: pointer;
+}
+
+.searchform__toggle {
+  max-width: calc(100vw * (36 / 1280));
+  min-width: 36px;
+  height: 20px;
+
+  background-image: url(../../../images/searchform__toggle.svg);
+  background-repeat: no-repeat;
+  background-color: #FFFFFF;
+
+  border-bottom: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+
+  padding: 0;
+  margin: 0 0 0 29px;
+}
+
+.searchform__toggle:hover {
+  cursor: pointer;
+}
+
+.searchform__toggle-name {
+  font-size: 13px;
+  line-height: 18px;
+
+  margin: 0 0 0 14px;
+}

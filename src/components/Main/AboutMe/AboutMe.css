@@ -1,6 +1,8 @@
 .aboutme {
+  max-width: 1280px;
+
   padding-top: 110px;
-  margin: 0;
+  margin: 0 auto;
 }
 
 .aboutme__header {
@@ -33,7 +35,7 @@
 
 .aboutme__name {
   font-size: 50px;
-  line-height:58px;
+  line-height: 58px;
   font-weight: 400;
 
   margin: 0;
@@ -41,14 +43,14 @@
 
 .aboutme__specialis {
   font-size: 18px;
-  line-height:20px;
+  line-height: 20px;
 
   margin: 18px 0 0 0;
 }
 
 .aboutme__bio {
   font-size: 15px;
-  line-height:22px;
+  line-height: 22px;
 
   margin: 26px 0 0 0;
 }
@@ -62,7 +64,7 @@
 
 .aboutme__link {
   font-size: 14px;
-  line-height:17px;
+  line-height: 17px;
 
   margin: 0;
 }
@@ -99,7 +101,7 @@
 
   .aboutme__name {
     font-size: 40px;
-    line-height:40px;
+    line-height: 40px;
   }
 
   .aboutme__specialis {
@@ -111,7 +113,7 @@
 
   .aboutme__bio {
     font-size: 13px;
-    line-height:18px;
+    line-height: 18px;
 
     margin: 20px 0 0 0;
   }
@@ -186,7 +188,7 @@
 
   .aboutme__bio {
     font-size: 12px;
-    line-height:16px;
+    line-height: 16px;
   }
 
   .aboutme__links {

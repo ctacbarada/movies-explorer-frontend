@@ -1,7 +1,10 @@
 .header {
+  max-width: 1280px;
   height: 74px;
   display: flex;
   justify-content: space-between;
+
+  margin: 0 auto;
 }
 
 .header__logo {
@@ -53,10 +56,6 @@
   margin: 15px 30px 15px 0;
 }
 
-
-
-
-
 .header__auth {
   display: flex;
   align-items: center;
@@ -90,10 +89,6 @@
 
   margin: 0;
 }
-
-
-
-
 
 @media screen and (max-width: 768px) {
   .header__logo {

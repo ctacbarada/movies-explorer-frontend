@@ -14,7 +14,7 @@
 
   width: 96px;
   height: 36px;
-  background-color: #E8E8E8;
+  background-color: #e8e8e8;
 
   border-radius: 10px;
 
@@ -26,7 +26,6 @@
 }
 
 @media screen and (max-width: 768px) {
-
 }
 
 @media screen and (max-width: 320px) {

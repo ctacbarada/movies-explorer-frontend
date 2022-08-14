@@ -7,7 +7,7 @@ function NavTab() {
       <p className="navtab__item">Технологии</p>
       <p className="navtab__item">Студент</p>
     </div>
-  )
+  );
 }
 
 export default NavTab;

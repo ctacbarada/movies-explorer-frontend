@@ -1,6 +1,7 @@
 .footer {
+  max-width: 1280px;
   padding-top: 60px;
-  margin: 0 max(calc(100% * (70 / 1280))) 20px;
+  margin: 0 auto 20px;
 }
 
 .footer__title {
@@ -8,7 +9,7 @@
 
   font-size: 13px;
   line-height: 16px;
-  color: #A0A0A0;
+  color: #a0a0a0;
   text-align: center;
 
   border-bottom: 1px solid rgba(232, 232, 232, 1);
@@ -16,7 +17,7 @@
   border-left: none;
   border-right: none;
 
-  margin: 0;
+  margin: 0 70px;
 }
 
 .footer__navigation {
@@ -27,7 +28,7 @@
   justify-content: space-between;
   align-items: center;
 
-  margin: 20px 0 0 0;
+  margin: 20px 70px 0;
 }
 
 .footer__copyright {

@@ -1,10 +1,12 @@
 .aboutproject {
+  max-width: 1280px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
 
   padding-top: 110px;
-  margin: 0;
+  margin: 0 auto;
 }
 
 .aboutproject__title {
@@ -30,7 +32,7 @@
   column-gap: 40px;
   row-gap: 26px;
 
-  margin: 70px auto 0;
+  margin: 70px max(calc(100% * (70 / 1280))) 0;
 }
 
 .aboutproject__card-title {
@@ -65,8 +67,8 @@
   max-width: 228px;
   height: 36px;
 
-  color:#FFFFFF;
-  background-color: #3456F3;
+  color: #ffffff;
+  background-color: #3456f3;
 
   margin: 0;
 }
@@ -84,7 +86,7 @@
   max-width: 912px;
   height: 36px;
 
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 
   margin: 0;
 }
@@ -92,7 +94,6 @@
 .aboutproject__infographic-text {
   margin: 0;
 }
-
 
 @media screen and (max-width: 768px) {
   .aboutproject {
