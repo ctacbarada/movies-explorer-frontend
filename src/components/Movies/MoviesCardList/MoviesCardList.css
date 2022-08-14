@@ -14,3 +14,31 @@
   padding-top: 70px;
   margin: 0 auto 28px;
 }
+
+@media screen and (max-width: 768px) {
+  .moviescardlist {
+    max-width: 708px;
+
+    grid-template-columns: repeat(auto-fit, minmax(300px, 339px));
+    grid-template-rows: repeat(4, 231px);
+
+    row-gap: 47px;
+
+    margin: 0 max(100vw * (30 / 768)) 28px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .moviescardlist {
+    max-width: 300px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+    grid-template-rows: repeat(5, 199px);
+
+    row-gap: 39px;
+
+    padding-top: 50px;
+    margin: 0 auto 13px;
+  }
+}

@@ -18,6 +18,7 @@ export default function MoviesCard() {
           <p className="moviescard__time">1ч 17м</p>
         </div>
       </div>
+
       <div className="moviescard">
         <img
           className="moviescard__image"
@@ -30,6 +31,7 @@ export default function MoviesCard() {
           <p className="moviescard__time">1ч 17м</p>
         </div>
       </div>
+
       <div className="moviescard">
         <img
           className="moviescard__image"
@@ -42,6 +44,7 @@ export default function MoviesCard() {
           <p className="moviescard__time">1ч 17м</p>
         </div>
       </div>
+
       <div className="moviescard">
         <img
           className="moviescard__image"
@@ -54,6 +57,7 @@ export default function MoviesCard() {
           <p className="moviescard__time">1ч 17м</p>
         </div>
       </div>
+
       <div className="moviescard">
         <img
           className="moviescard__image"
@@ -66,7 +70,8 @@ export default function MoviesCard() {
           <p className="moviescard__time">1ч 17м</p>
         </div>
       </div>
-      <div className="moviescard">
+
+      {/* <div className="moviescard">
         <img
           className="moviescard__image"
           src="https://thumbs.dfs.ivi.ru/storage37/contents/5/9/2d3f6ce6aa379795babc5589e89a74.jpg"
@@ -77,8 +82,9 @@ export default function MoviesCard() {
           <p className="moviescard__title">Книготорговцы</p>
           <p className="moviescard__time">1ч 17м</p>
         </div>
-      </div>
-      <div className="moviescard">
+      </div> */}
+
+      {/* <div className="moviescard">
         <img
           className="moviescard__image"
           src="https://thumbs.dfs.ivi.ru/storage37/contents/5/9/2d3f6ce6aa379795babc5589e89a74.jpg"
@@ -151,7 +157,7 @@ export default function MoviesCard() {
           <p className="moviescard__title">По волнам: Искусство звука в кино</p>
           <p className="moviescard__time">1ч 17м</p>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

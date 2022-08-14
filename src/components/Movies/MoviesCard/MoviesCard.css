@@ -78,3 +78,43 @@
 
   margin: 0;
 }
+
+@media screen and (max-width: 768px) {
+  .moviescard__image {
+    height: 190px;
+  }
+
+  .moviescard__info {
+    margin: 25px 0 0  0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+
+  .moviescard__image {
+    height: 168px;
+  }
+
+  .moviescard__info {
+
+    display: flex;
+    justify-content: space-between;
+
+    margin: 16px 0 0 0;
+  }
+
+  .moviescard__save {
+    top: 10px;
+    right: 10px;
+  }
+
+  .moviescard__saved {
+    top: 10px;
+    right: 10px;
+  }
+
+  .moviescard__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

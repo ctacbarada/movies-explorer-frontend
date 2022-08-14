@@ -26,3 +26,19 @@
 .moremovies__button:hover {
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .moremovies {
+    padding: 35px 0 100px 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .moremovies {
+    padding: 50px 0 100px 0;
+  }
+
+  .moremovies__button {
+    width: 240px;
+  }
+}
