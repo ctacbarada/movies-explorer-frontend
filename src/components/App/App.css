@@ -1,6 +1,9 @@
+@import url(../../vendor/normalize.css);
+@import url(../../vendor/fonts/fonts.css);
+
 .App {
   min-width: 320px;
-  min-height: 100vh;
+  max-height: 100vh;
 
   background-color: #fafafa;
 
