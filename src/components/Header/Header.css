@@ -44,7 +44,7 @@
   justify-self: flex-end;
   width: 100px;
   height: 32px;
-  background-image: url(../../images/header__profile-button.svg);
+  background-image: url(../../images/profile-button.svg);
   margin: 21px 70px 21px 0;
 }
 
@@ -52,8 +52,19 @@
   display: none;
   width: 44px;
   height: 44px;
+
   background-image: url(../../images/header__hamburger.svg);
+  background-color: #fafafa;
+  border-bottom: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+
   margin: 15px 30px 15px 0;
+}
+
+.header__hamburger {
+  cursor: pointer;
 }
 
 .header__auth {

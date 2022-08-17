@@ -8,6 +8,7 @@
   align-items: center;
 
   padding-top: 74px;
+  margin: 0 auto;
 }
 
 .profile__title {
@@ -103,7 +104,9 @@
   }
 
   .profile__string {
-    width: 260px;
+    width: calc(100vw * (260 / 768));
+    max-width: 260px;
+    min-width: 160px;
   }
 
   .profile__edit-button {
