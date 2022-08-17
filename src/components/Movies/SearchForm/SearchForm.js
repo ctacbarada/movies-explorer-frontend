@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SearchForm.css";
 
 export default function SearchForm() {
@@ -27,7 +27,7 @@ export default function SearchForm() {
           }
           type="button"
           aria-label="Короткометражки"
-          onChange={setIsToggleActive}
+          onClick={setIsToggleActive}
         />
         <p className="searchform__toggle-name">Короткометражки</p>
       </form>
