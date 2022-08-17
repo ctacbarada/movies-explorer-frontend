@@ -140,7 +140,7 @@
     min-width: 100px;
   }
 
-  .searchform__toggle {
+  .searchform__toggle-enabled {
     max-width: calc(100vw * (36 / 768));
     margin: 0 0 0 19px;
   }
@@ -178,7 +178,7 @@
     padding: 0;
   }
 
-  .searchform__toggle {
+  .searchform__toggle-enabled {
     justify-self: start;
     grid-column: 1;
     grid-row: 2;
@@ -225,7 +225,7 @@
     margin: 0 19px 0 0;
   }
 
-  .searchform__toggle {
+  .searchform__toggle-enabled {
     max-width: calc(100vw * (36 / 1280));
 
     grid-column: 1;
