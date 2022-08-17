@@ -23,21 +23,15 @@
 .header__films-button {
   font-size: 13px;
   line-height: 18px;
-  font-weight: 500;
-  text-decoration: none;
-  color: #000000;
-
-  margin: 0 0 0 0;
-}
-
-.header__saved-films-button {
-  font-size: 13px;
-  line-height: 18px;
   font-weight: 400;
   text-decoration: none;
   color: #000000;
 
-  margin: 0 0 0 16px;
+  margin: 0 16px 0 0;
+}
+
+.header__button_active {
+  font-weight: 500;
 }
 
 .header__profile-button {

@@ -4,7 +4,7 @@ import './MoreMovies.css'
 export default function MoreMovies() {
   return (
     <div className='moremovies'>
-      <button className='moremovies__button' onClick={''}>Ещё</button>
+      <button className='moremovies__button'>Ещё</button>
     </div>
   )
 }

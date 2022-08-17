@@ -11,11 +11,11 @@ import Login from "../Login/Login";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 
 function App() {
-
   return (
     <div className="App">
       <Routes>
         <Route
+          exact
           path="/"
           element={
             <>
