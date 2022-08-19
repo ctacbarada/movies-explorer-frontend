@@ -9,37 +9,57 @@ function Header({ isOpen }) {
 
   const handleOpenNavigationMenu = () => {
     setIsNavigation(true);
-  }
+  };
 
   const handleCloseNavigationMenu = () => {
     setIsNavigation(false);
+  };
+
+  function handleMouseEnter(e) {
+    e.target.nextElementSibling.classList.add("header__underline-enable");
+  }
+
+  function handleMouseLeave(e) {
+    e.target.nextElementSibling.classList.remove(
+      "header__underline-enable"
+    );
   }
 
   return isUserLoggedIn ? (
     <>
       <header className="header">
-        <Link to='/' className="header__logo" />
+        <Link to="/" className="header__logo" />
         <div className="header__navigation">
-          <NavLink
-            to="/movies"
-            className={({ isActive }) =>
-              isActive
-                ? "header__films-button header__button_active"
-                : "header__films-button"
-            }
-          >
-            Фильмы
-          </NavLink>
-          <NavLink
-            to="/saved-movies"
-            className={({ isActive }) =>
-              isActive
-                ? "header__films-button header__button_active"
-                : "header__films-button"
-            }
-          >
-            Сохранённые фильмы
-          </NavLink>
+          <div className="header__link">
+            <NavLink
+              to="/movies"
+              className={({ isActive }) =>
+                isActive
+                  ? "header__films-button header__button_active"
+                  : "header__films-button"
+              }
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              Фильмы
+            </NavLink>
+            <div className="header__underline"></div>
+          </div>
+          <div className="header__link">
+            <NavLink
+              to="/saved-movies"
+              className={({ isActive }) =>
+                isActive
+                  ? "header__films-button header__button_active"
+                  : "header__films-button"
+              }
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              Сохранённые фильмы
+            </NavLink>
+            <div className="header__underline"></div>
+          </div>
         </div>
         <Link to="/profile" className="header__profile-button" />
         <button
@@ -51,7 +71,7 @@ function Header({ isOpen }) {
     </>
   ) : (
     <header className="header">
-      <Link to='/' className="header__logo" />
+      <Link to="/" className="header__logo" />
       <div className="header__auth">
         <Link to="/signup" className="header__registration">
           Регистрация
