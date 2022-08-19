@@ -3,7 +3,7 @@ import "./Footer.css";
 
 export default function Footer() {
   return (
-    <div className="footer">
+    <footer className="footer">
       <p className="footer__title">
         Учебный проект Яндекс.Практикум х BeatFilm.
       </p>
@@ -15,6 +15,6 @@ export default function Footer() {
         </div>
         <p className="footer__copyright">© 2022</p>
       </div>
-    </div>
+    </footer>
   );
 }

@@ -28,7 +28,7 @@ export default function Register() {
 
   return (
     <section className="login">
-      <div className="register__logo"></div>
+      <Link to="/" className="register__logo"></Link>
       <h2 className="register__title">Добро пожаловать!</h2>
       <form className="register__form">
         <p className="register__name">Имя</p>

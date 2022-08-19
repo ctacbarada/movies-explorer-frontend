@@ -13,10 +13,7 @@
 
   background-color: #F4F4F4;
 
-  border-bottom: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  border: none;
   border-radius: 6px;
 
   padding: 0;
@@ -24,6 +21,8 @@
 }
 
 .moremovies__button:hover {
+  opacity: .7;
+  transition: opacity .2s linear;
   cursor: pointer;
 }
 

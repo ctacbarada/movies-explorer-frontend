@@ -3,8 +3,8 @@ import './MoreMovies.css'
 
 export default function MoreMovies() {
   return (
-    <div className='moremovies'>
+    <section className='moremovies'>
       <button className='moremovies__button'>Ещё</button>
-    </div>
+    </section>
   )
 }

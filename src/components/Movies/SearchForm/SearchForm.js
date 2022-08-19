@@ -3,6 +3,11 @@ import "./SearchForm.css";
 
 export default function SearchForm() {
   const [isToggleActive, setIsToggleActive] = useState(false);
+  const [film, setFilm] = React.useState("");
+
+  function inputFilm(e) {
+    setFilm(e.target.value);
+  }
 
   return (
     <section className="searchform">
@@ -13,6 +18,8 @@ export default function SearchForm() {
           name="searchform"
           type="text"
           placeholder="Фильм"
+          onChange={inputFilm}
+          required
         />
         <button
           className="searchform__button-confirm"

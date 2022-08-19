@@ -59,6 +59,8 @@
 }
 
 .navigation__link:hover {
+  opacity: .7;
+  transition: opacity .2s linear;
   cursor: pointer;
 }
 
@@ -84,15 +86,17 @@
   width: 100px;
   height: 32px;
 
-  border-bottom: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  border: none;
 
   background-image: url(../../images/profile-button.svg);
   background-color: #fafafa;
 
   margin: 593px 0 90px 0;
+}
+
+.navigation__profile-button:hover {
+  opacity: .7;
+  transition: opacity .2s linear;
 }
 
 .navigation__close-button {
@@ -101,10 +105,7 @@
   width: 32px;
   height: 32px;
 
-  border-bottom: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  border: none;
 
   top: 22.5px;
   right: 22.5px;
@@ -114,6 +115,12 @@
   background-repeat: no-repeat;
 
   margin: 0;
+}
+
+.navigation__close-button:hover {
+  opacity: .7;
+  transition: opacity .2s linear;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 320px) {

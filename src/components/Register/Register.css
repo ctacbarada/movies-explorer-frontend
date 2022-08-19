@@ -19,6 +19,12 @@
   margin: 0;
 }
 
+.register__logo:hover {
+  opacity: .7;
+  transition: opacity .2s linear;
+  cursor: pointer;
+}
+
 .register__title {
   width: 396px;
 
@@ -53,11 +59,9 @@
 
   background-color: #f4f4f4;
 
-  border-bottom: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  border: none;
   border-radius: 8px;
+  outline: none;
 
   font-size: 13px;
   line-height: 16px;
@@ -93,14 +97,26 @@
   background-color: #3456f3;
   color: #ffffff;
 
-  border-bottom: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  border: none;
   border-radius: 3px;
 
   padding: 0;
   margin: 69px 0 0 0;
+}
+
+.register__signup:hover {
+  opacity: .8;
+  transition: opacity .2s linear;
+  cursor: pointer;
+}
+
+.register__signup-question {
+  font-size: 14px;
+  line-height: 17px;
+  color: #a0a0a0;
+  text-align: center;
+
+  margin: 16px 0 0 0;
 }
 
 .register__signin {
@@ -112,13 +128,10 @@
   margin: 0 0 0 6px;
 }
 
-.register__signup-question {
-  font-size: 14px;
-  line-height: 17px;
-  color: #a0a0a0;
-  text-align: center;
-
-  margin: 16px 0 0 0;
+.register__signin:hover {
+  opacity: .7;
+  transition: opacity .2s linear;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

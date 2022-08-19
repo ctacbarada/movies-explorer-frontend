@@ -14,6 +14,12 @@
   margin: 18px 62px 18px 70px;
 }
 
+.header__logo:hover {
+  opacity: .7;
+  transition: opacity .2s linear;
+  cursor: pointer;
+}
+
 .header__navigation {
   display: flex;
   align-items: center;
@@ -30,6 +36,12 @@
   margin: 0 16px 0 0;
 }
 
+.header__films-button:hover {
+  opacity: .7;
+  transition: opacity .2s linear;
+}
+
+
 .header__button_active {
   font-weight: 500;
 }
@@ -42,6 +54,11 @@
   margin: 21px 70px 21px 0;
 }
 
+.header__profile-button:hover {
+  opacity: .7;
+  transition: opacity .2s linear;
+}
+
 .header__hamburger {
   display: none;
   width: 44px;
@@ -49,15 +66,14 @@
 
   background-image: url(../../images/header__hamburger.svg);
   background-color: #fafafa;
-  border-bottom: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  border: none;
 
   margin: 15px 30px 15px 0;
 }
 
-.header__hamburger {
+.header__hamburger:hover {
+  opacity: .7;
+  transition: opacity .2s linear;
   cursor: pointer;
 }
 

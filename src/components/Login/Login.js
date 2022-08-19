@@ -28,7 +28,7 @@ export default function Login() {
 
   return (
     <section className="login">
-      <div className="login__logo"></div>
+      <Link to="/" className="login__logo"></Link>
       <h2 className="login__title">Рады видеть!</h2>
       <form className="login__form">
         <p className="login__name">E-mail</p>
@@ -59,7 +59,7 @@ export default function Login() {
         </button>
         <p className="login__signup-question">
           Ещё не зарегистрированы?
-          <Link to="/signin" className="login__signin">
+          <Link to="/signup" className="login__signin">
             Регистрация
           </Link>
         </p>

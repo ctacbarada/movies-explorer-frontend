@@ -4,7 +4,7 @@ import Techs from "../Main/Techs/Techs";
 import AboutMe from "./AboutMe/AboutMe";
 import Portfolio from "./Portfolio/Portfolio";
 
-function Main() {
+function Main({context}) {
   return (
     <>
       <Promo />
