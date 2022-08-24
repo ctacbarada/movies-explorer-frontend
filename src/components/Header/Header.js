@@ -4,7 +4,7 @@ import "./Header.css";
 import Navigation from "../Navigation/Navigation";
 
 function Header({ isOpen }) {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [isNavigation, setIsNavigation] = useState(false);
 
   const handleOpenNavigationMenu = () => {

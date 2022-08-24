@@ -20,17 +20,17 @@ export default function Login() {
     setPassword(e.target.value);
   }
 
-  // function handleSubmit(event) {
-  //   event.preventDefault();
+  function handleSubmit(event) {
+    event.preventDefault();
 
-  //   handlelogin(password, email);
-  // }
+    // handlelogin(password, email);
+  }
 
   return (
     <section className="login">
       <Link to="/" className="login__logo"></Link>
       <h2 className="login__title">Рады видеть!</h2>
-      <form className="login__form">
+      <form className="login__form" onSubmit={handleSubmit}>
         <p className="login__name">E-mail</p>
         <input
           className="login__input"

@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
 import "./SearchForm.css";
+import React, { useEffect, useState } from "react";
 
 export default function SearchForm() {
   const [isToggleActive, setIsToggleActive] = useState(false);
-  const [film, setFilm] = React.useState("");
+  const [movieTitle, setMovieTitle] = React.useState("");
 
   function inputFilm(e) {
-    setFilm(e.target.value);
+    setMovieTitle(e.target.value);
+  }
+
+  function handleSubmitSearchForm(e) {
+    e.preventDefault();
   }
 
   return (
     <section className="searchform">
-      <form className="searchform__form" name="searchform">
+      <form
+        className="searchform__form"
+        name="searchform"
+        onSubmit={handleSubmitSearchForm}
+      >
         <div className="searchform__icon"></div>
         <input
           className="searchform__input"

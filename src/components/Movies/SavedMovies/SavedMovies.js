@@ -9,7 +9,7 @@ export default function SavedMovies() {
     <>
       <SearchForm />
       <MoviesCardList />
-      <MoreMovies />
+      {/* <MoreMovies /> */}
     </>
   )
 }

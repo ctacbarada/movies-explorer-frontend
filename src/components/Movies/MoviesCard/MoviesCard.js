@@ -1,93 +1,44 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./MoviesCard.css";
 
-export default function MoviesCard() {
+export default function MoviesCard({ movie }) {
   const [isSaved, setIsSaved] = useState(false);
+  const url = "https://api.nomoreparties.co/";
+  const time =
+    Math.floor(movie.duration / 60) +
+    ":" +
+    (movie.duration % 60 < 10
+      ? "0" + (movie.duration % 60)
+      : movie.duration % 60);
+
+  function saveMovie() {
+    setIsSaved(true);
+  }
+
+  function unSaveMovie() {
+    setIsSaved(false);
+  }
 
   return (
     <>
       <div className="moviescard">
-        <img
-          className="moviescard__image"
-          src="https://thumbs.dfs.ivi.ru/storage37/contents/5/9/2d3f6ce6aa379795babc5589e89a74.jpg"
-          alt="33 слова о дизайне"
-        />
-        {!isSaved ? (
-          <button className="moviescard__save" />
-        ) : (
-          <div className="moviescard__saved" />
-        )}
-        <div className="moviescard__info">
-          <p className="moviescard__title">33 слова о дизайне</p>
-          <p className="moviescard__time">1ч 17м</p>
-        </div>
-      </div>
+        <a href={movie.trailerLink} rel="noreferrer" target="_blank">
+          <img
+            className="moviescard__image"
+            src={`${url}/${movie.image.url}`}
+            alt={`${url}/${movie.nameRU}`}
+          />
+        </a>
 
-      <div className="moviescard">
-        <img
-          className="moviescard__image"
-          src="https://thumbs.dfs.ivi.ru/storage37/contents/5/9/2d3f6ce6aa379795babc5589e89a74.jpg"
-          alt="33 слова о дизайне"
-        />
         {!isSaved ? (
-          <button className="moviescard__save" />
+          <button className="moviescard__save" onClick={saveMovie} />
         ) : (
-          <div className="moviescard__saved" />
+          <div className="moviescard__saved" onClick={unSaveMovie} />
         )}
         <div className="moviescard__info">
-          <p className="moviescard__title">Киноальманах «100 лет дизайна»</p>
-          <p className="moviescard__time">1ч 17м</p>
-        </div>
-      </div>
-
-      <div className="moviescard">
-        <img
-          className="moviescard__image"
-          src="https://thumbs.dfs.ivi.ru/storage37/contents/5/9/2d3f6ce6aa379795babc5589e89a74.jpg"
-          alt="33 слова о дизайне"
-        />
-        {!isSaved ? (
-          <button className="moviescard__save" />
-        ) : (
-          <div className="moviescard__saved" />
-        )}
-        <div className="moviescard__info">
-          <p className="moviescard__title">В погоне за Бенкси</p>
-          <p className="moviescard__time">1ч 17м</p>
-        </div>
-      </div>
-
-      <div className="moviescard">
-        <img
-          className="moviescard__image"
-          src="https://thumbs.dfs.ivi.ru/storage37/contents/5/9/2d3f6ce6aa379795babc5589e89a74.jpg"
-          alt="33 слова о дизайне"
-        />
-        {!isSaved ? (
-          <button className="moviescard__save" />
-        ) : (
-          <div className="moviescard__saved" />
-        )}
-        <div className="moviescard__info">
-          <p className="moviescard__title">Баския: Взрыв реальности</p>
-          <p className="moviescard__time">1ч 17м</p>
-        </div>
-      </div>
-
-      <div className="moviescard">
-        <img
-          className="moviescard__image"
-          src="https://thumbs.dfs.ivi.ru/storage37/contents/5/9/2d3f6ce6aa379795babc5589e89a74.jpg"
-          alt="33 слова о дизайне"
-        />
-        {!isSaved ? (
-          <button className="moviescard__save" />
-        ) : (
-          <div className="moviescard__saved" />
-        )}
-        <div className="moviescard__info">
-          <p className="moviescard__title">Бег это свобода</p>
-          <p className="moviescard__time">1ч 17м</p>
+          <p className="moviescard__title">{movie.nameRU}</p>
+          <p className="moviescard__time">{time}</p>
         </div>
       </div>
     </>

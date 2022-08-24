@@ -1,11 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
+import * as Auth from '../../Api/Auth'
 
 export default function Register() {
   const [name, setName] = React.useState("Виталий");
   const [email, setEmail] = React.useState("pochta@yandex.ru");
   const [password, setPassword] = React.useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const history = useNavigate();
   // const currentUser = React.useContext(CurrentUserContext);
 
   function inputName(e) {
@@ -20,17 +23,28 @@ export default function Register() {
     setPassword(e.target.value);
   }
 
-  // function handleSubmit(event) {
-  //   event.preventDefault();
+  function handleRegister(name, email, password) {
+    return Auth.register(name, email, password)
+      .then(() => {
+        history("/singin"); //Если форма отправлена успешна, перенаправим пользователя на страницу авторизации.
+      })
+      .catch((error) => {
+        console.log("Ошибка регистрации:");
+        setErrorMessage(error.message);
+      });
+  }
 
-  //   handleRegister(password, email);
-  // }
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    handleRegister(password, email);
+  }
 
   return (
-    <section className="login">
+    <section className="register">
       <Link to="/" className="register__logo"></Link>
       <h2 className="register__title">Добро пожаловать!</h2>
-      <form className="register__form">
+      <form className="register__form" onSubmit={handleSubmit}>
         <p className="register__name">Имя</p>
         <input
           className="register__input"
