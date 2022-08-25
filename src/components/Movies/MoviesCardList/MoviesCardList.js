@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
-import { MoviesApi } from "../../../utils/MoviesApi";
+import { MoviesApi } from "../../../utils/Api/MoviesApi";
 import MoreMovies from "../MoreMovies/MoreMovies";
 import Preloader from "../Preloader/Preloader";
 

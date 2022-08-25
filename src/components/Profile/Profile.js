@@ -1,11 +1,17 @@
+import "./Profile.css";
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Profile.css";
+import { CurrentUserContext } from "../../utils/CurrentUserContext";
 
-export default function Profile() {
+export default function Profile({ onUpdateUser, handleSignOut }) {
   const [name, setName] = React.useState("Виталий");
   const [email, setEmail] = React.useState("pochta@yandex.ru");
-  // const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext);
+
+  React.useEffect(() => {
+    setName(currentUser.name || "");
+    setEmail(currentUser.email || "");
+  }, [currentUser]);
 
   function inputName(e) {
     setName(e.target.value);
@@ -15,15 +21,19 @@ export default function Profile() {
     setEmail(e.target.value);
   }
 
-  // React.useEffect(() => {
-  //   setName(currentUser.name || "");
-  //   setDescription(currentUser.about || "");
-  // }, [currentUser, isOpen]);
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    onUpdateUser({
+      name,
+      email,
+    });
+  }
 
   return (
     <section className="profile">
-      <div className="profile__title">Привет, Виталий!</div>
-      <form className="profile__form">
+      <div className="profile__title">Привет, {name}!</div>
+      <form className="profile__form" onSubmit={handleSubmit}>
         <div className="profile__string">
           <p className="profile__string-name">Имя</p>
           <input
@@ -55,7 +65,7 @@ export default function Profile() {
         <button className="profile__edit-button" type="submit">
           Редактировать
         </button>
-        <Link to="/" className="profile__logout">
+        <Link to="/" className="profile__logout" onClick={handleSignOut}>
           Выйти из аккаунта
         </Link>
       </form>

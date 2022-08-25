@@ -1,15 +1,11 @@
-import React, {useState} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { React, useState } from "react";
+import { Link } from "react-router-dom";
 import "./Register.css";
-import * as Auth from '../../Api/Auth'
 
-export default function Register() {
-  const [name, setName] = React.useState("Виталий");
-  const [email, setEmail] = React.useState("pochta@yandex.ru");
-  const [password, setPassword] = React.useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const history = useNavigate();
-  // const currentUser = React.useContext(CurrentUserContext);
+export default function Register({ handleRegister, errorMessage }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   function inputName(e) {
     setName(e.target.value);
@@ -23,21 +19,10 @@ export default function Register() {
     setPassword(e.target.value);
   }
 
-  function handleRegister(name, email, password) {
-    return Auth.register(name, email, password)
-      .then(() => {
-        history("/singin"); //Если форма отправлена успешна, перенаправим пользователя на страницу авторизации.
-      })
-      .catch((error) => {
-        console.log("Ошибка регистрации:");
-        setErrorMessage(error.message);
-      });
-  }
-
   function handleSubmit(event) {
     event.preventDefault();
 
-    handleRegister(password, email);
+    handleRegister(name, email, password);
   }
 
   return (
@@ -52,7 +37,7 @@ export default function Register() {
           onChange={inputName}
           name="name"
           type="text"
-          placeholder="Имя"
+          placeholder="Name"
           minLength="2"
           maxLength="40"
           required
@@ -76,11 +61,12 @@ export default function Register() {
           onChange={inputPassword}
           name="password"
           type="text"
+          placeholder="Password"
           minLength="2"
           maxLength="40"
           required
         />
-        <span className="register__error">Что-то пошло не так...</span>
+        <span className="register__error">{errorMessage}</span>
         <button className="register__signup" type="submit">
           Зарегистрироваться
         </button>

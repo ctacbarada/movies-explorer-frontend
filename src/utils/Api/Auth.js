@@ -1,5 +1,5 @@
-// export const BASE_URL = "http://api.stan.nomoredomains.xyz";
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "https://api.stan.nomoredomains.xyz";
+// export const BASE_URL = "http://localhost:3001";
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -21,7 +21,7 @@ export const register = (name, email, password) => {
   }).then(checkResponse);
 };
 
-export const autorisation = (password, email) => {
+export const autorisation = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {

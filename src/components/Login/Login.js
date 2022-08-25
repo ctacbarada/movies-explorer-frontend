@@ -1,16 +1,10 @@
-import React from "react";
+import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
 
-export default function Login() {
-  const [name, setName] = React.useState("Виталий");
-  const [email, setEmail] = React.useState("pochta@yandex.ru");
-  const [password, setPassword] = React.useState("");
-  // const currentUser = React.useContext(CurrentUserContext);
-
-  function inputName(e) {
-    setName(e.target.value);
-  }
+export default function Login({ handleLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   function inputEmail(e) {
     setEmail(e.target.value);
@@ -22,8 +16,7 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    // handlelogin(password, email);
+    handleLogin(email, password);
   }
 
   return (
@@ -50,6 +43,7 @@ export default function Login() {
           onChange={inputPassword}
           name="password"
           type="text"
+          placeholder="Password"
           minLength="2"
           maxLength="40"
           required

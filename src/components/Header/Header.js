@@ -3,8 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
 import Navigation from "../Navigation/Navigation";
 
-function Header({ isOpen }) {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+function Header({ isUserLoggedIn }) {
   const [isNavigation, setIsNavigation] = useState(false);
 
   const handleOpenNavigationMenu = () => {
@@ -20,9 +19,7 @@ function Header({ isOpen }) {
   }
 
   function handleMouseLeave(e) {
-    e.target.nextElementSibling.classList.remove(
-      "header__underline-enable"
-    );
+    e.target.nextElementSibling.classList.remove("header__underline-enable");
   }
 
   return isUserLoggedIn ? (
