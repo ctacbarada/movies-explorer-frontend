@@ -1,60 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
-import { MoviesApi } from "../../../utils/Api/MoviesApi";
 import MoreMovies from "../MoreMovies/MoreMovies";
 import Preloader from "../Preloader/Preloader";
 
-export default function MoviesCardList() {
-  const [recivedMoives, setRecivedMoives] = React.useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [inputValue, setInputValue] = useState(true);
-  const [counter, setCounter] = useState(12);
-  const [moreMovies, setMoreMovies] = useState(true);
-
-  const innerWidth = window.innerWidth;
-
-  useEffect(() => {
-    MoviesApi.getMovies()
-      .then((res) => {
-        setRecivedMoives(res);
-        setIsLoading(true);
-          if (innerWidth > 1280 && innerWidth > 769) {
-            setCounter(12);
-          } else if (innerWidth <= 768 && innerWidth > 321) {
-            setCounter(8);
-          } else if (innerWidth <= 320) {
-            setCounter(5);
-          }
-      })
-      .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
-  }, [innerWidth]);
-
-
-  function buttonMore() {
-    if (window.innerWidth >= 1140) {
-      setCounter(counter + 3);
-      if (counter >= recivedMoives.length) {
-        setMoreMovies(false);
-      }
-    } else if (window.innerWidth <= 1140 && window.innerWidth >= 768) {
-      setCounter(counter + 2);
-      if (counter >= recivedMoives.length) {
-        setMoreMovies(false);
-      }
-    } else if (window.innerWidth <= 765) {
-      setCounter(counter + 1);
-      if (counter >= recivedMoives.length) {
-        setMoreMovies(false);
-      }
-    }
-  }
-
+export default function MoviesCardList({
+  handleSaveMovie,
+  handleUnSaveMovie,
+  recivedMoives,
+  isLoading,
+  counter,
+  moreMovies,
+  buttonMore,
+  isSavedMoviesSection,
+  isMainMoviesSection,
+  savedMoives,
+}) {
   return isLoading ? (
     <>
+      {}
       <section className="moviescardlist" aria-label="Фильмы">
-        {recivedMoives.slice(0, counter).map((movie) => (
-          <MoviesCard movie={movie} key={movie.id} />
+        {recivedMoives.slice(0, counter).map((movie, i) => (
+          <MoviesCard
+            movie={movie}
+            key={isSavedMoviesSection ? i : movie.id}
+            handleSaveMovie={handleSaveMovie}
+            handleUnSaveMovie={handleUnSaveMovie}
+            isSavedMoviesSection={isSavedMoviesSection}
+            isMainMoviesSection={isMainMoviesSection}
+            savedMoives={savedMoives}
+          />
         ))}
       </section>
       {moreMovies ? <MoreMovies onClick={buttonMore} /> : null}

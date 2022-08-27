@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
 import Navigation from "../Navigation/Navigation";
 
-function Header({ isUserLoggedIn }) {
+function Header({ isUserLoggedIn, setMainMovies}) {
   const [isNavigation, setIsNavigation] = useState(false);
 
   const handleOpenNavigationMenu = () => {
