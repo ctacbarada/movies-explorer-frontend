@@ -27,6 +27,9 @@ function App() {
 
   const [recivedMoives, setRecivedMoives] = useState([]);
   const [savedMoives, setSavedMoives] = useState([]);
+  const [copyRecivedMoives, setCopyRecivedMoives] = useState([]);
+  const [copySavedMoives, setCopySavedMoives] = useState([]);
+  const [isToggleActiveMoives, setIsToggleActiveMoives] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [counter, setCounter] = useState(12);
@@ -35,7 +38,6 @@ function App() {
   const history = useNavigate();
   const innerWidth = window.innerWidth;
   const url = "https://api.nomoreparties.co";
-  // const [userId, setUserId] = useState('')
 
   function checkToken() {
     if (localStorage.getItem("jwt")) {
@@ -102,6 +104,9 @@ function App() {
     MoviesApi.getMovies()
       .then((res) => {
         setRecivedMoives(res);
+        const copy = Object.assign([], res);
+        setCopyRecivedMoives(copy);
+        setIsToggleActiveMoives(copy);
         setIsLoading(true);
         if (innerWidth > 1280 && innerWidth > 769) {
           setCounter(12);
@@ -153,7 +158,6 @@ function App() {
   }
 
   function handleUnSaveMovie(savedMoive) {
-    console.log(savedMoive._id)
     MainApi.deleteMovie(savedMoive._id, token)
       .then((res) => {})
       .catch((err) => console.log(`Ошибка сохранения фильма: ${err}`));
@@ -163,6 +167,8 @@ function App() {
     MainApi.getMovies(token)
       .then((res) => {
         setSavedMoives(res);
+        const copy = Object.assign([], res);
+        setCopySavedMoives(copy);
         if (innerWidth > 1280 && innerWidth > 769) {
           setCounter(12);
         } else if (innerWidth <= 768 && innerWidth > 321) {
@@ -173,6 +179,43 @@ function App() {
       })
       .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
   }, [innerWidth, token]);
+
+  function sortFilms(inputSearchBar) {
+    // if (window.location.href === "http://localhost:3000/movies") {
+    if (window.location.href === "http://stan.nomoredomains.xyz/movies") {
+      const movie = Object.values(recivedMoives).filter((item) => {
+        return item.nameRU.includes(inputSearchBar) ? item : null;
+      });
+      setCopyRecivedMoives(movie);
+      setIsToggleActiveMoives(movie);
+      // setCopySavedMoives(movie);
+    } else {
+      const movie = Object.values(savedMoives).filter((item) => {
+        return item.nameRU.includes(inputSearchBar) ? item : null;
+      });
+      setCopySavedMoives(movie);
+      setIsToggleActiveMoives(movie);
+    }
+  }
+
+  function activeToggle(isToggleActive) {
+    console.log(isToggleActive)
+    if (!isToggleActive) {
+      const movie = Object.values(
+        // window.location.href === "http://localhost:3000/movies"
+        window.location.href === "http://stan.nomoredomains.xyz/movies"
+          ? copyRecivedMoives
+          : copySavedMoives
+      ).filter((item) => {
+        return item.duration < 40 ? item : null;
+      });
+      setCopyRecivedMoives(movie);
+      setCopySavedMoives(movie);
+    } else {
+      setCopyRecivedMoives(recivedMoives);
+      setCopySavedMoives(savedMoives);
+    }
+  }
 
   return (
     <div className="App">
@@ -198,14 +241,16 @@ function App() {
                   <Movies
                     handleSaveMovie={handleSaveMovie}
                     handleUnSaveMovie={handleUnSaveMovie}
-                    recivedMoives={recivedMoives}
+                    recivedMoives={copyRecivedMoives}
                     isLoading={isLoading}
                     counter={counter}
                     moreMovies={moreMovies}
                     buttonMore={buttonMore}
                     isSavedMoviesSection={isSavedMoviesSection}
                     isMainMoviesSection={isMainMoviesSection}
-                    savedMoives={savedMoives}
+                    savedMovies={copySavedMoives}
+                    sortFilms={sortFilms}
+                    activeToggle={activeToggle}
                   />
                   <Footer />
                 </ProtectedRoute>
@@ -223,13 +268,15 @@ function App() {
                 <SavedMovies
                   handleSaveMovie={handleSaveMovie}
                   handleUnSaveMovie={handleUnSaveMovie}
-                  recivedMoives={savedMoives}
+                  recivedMoives={copySavedMoives}
                   isLoading={isLoading}
                   counter={counter}
                   moreMovies={moreMovies}
                   buttonMore={buttonMore}
                   isSavedMoviesSection={isSavedMoviesSection}
-                  savedMoives={savedMoives}
+                  savedMovies={copySavedMoives}
+                  sortFilms={sortFilms}
+                  activeToggle={activeToggle}
                 />
                 <Footer />
               </>

@@ -14,8 +14,9 @@ export default function MoviesCardList({
   buttonMore,
   isSavedMoviesSection,
   isMainMoviesSection,
-  savedMoives,
+  savedMovies,
 }) {
+  console.log("recivedMoives:", recivedMoives)
   return isLoading ? (
     <>
       {}
@@ -28,7 +29,7 @@ export default function MoviesCardList({
             handleUnSaveMovie={handleUnSaveMovie}
             isSavedMoviesSection={isSavedMoviesSection}
             isMainMoviesSection={isMainMoviesSection}
-            savedMoives={savedMoives}
+            savedMovies={savedMovies}
           />
         ))}
       </section>

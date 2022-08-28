@@ -1,16 +1,18 @@
 import "./SearchForm.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-export default function SearchForm() {
+export default function SearchForm({ sortFilms, activeToggle }) {
   const [isToggleActive, setIsToggleActive] = useState(false);
-  const [movieTitle, setMovieTitle] = React.useState("");
+  const [inputSearchBar, setInputSearchBar] = useState("");
 
   function inputFilm(e) {
-    setMovieTitle(e.target.value);
+    sortFilms(e.target.value);
+    setInputSearchBar(e.target.value);
   }
 
   function handleSubmitSearchForm(e) {
     e.preventDefault();
+    setInputSearchBar(inputSearchBar);
   }
 
   return (
@@ -42,7 +44,11 @@ export default function SearchForm() {
           }
           type="button"
           aria-label="Короткометражки"
-          onClick={setIsToggleActive}
+          selected={isToggleActive}
+          onClick={() => {
+            setIsToggleActive(!isToggleActive);
+            activeToggle(isToggleActive);
+          }}
         />
         <p className="searchform__toggle-name">Короткометражки</p>
       </form>

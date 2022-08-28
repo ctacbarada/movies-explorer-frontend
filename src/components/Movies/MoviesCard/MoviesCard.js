@@ -8,10 +8,10 @@ export default function MoviesCard({
   handleUnSaveMovie,
   isSavedMoviesSection,
   isMainMoviesSection,
-  savedMoives,
+  savedMovies,
 }) {
   const [isSaved, setIsSaved] = useState(false);
-  const [savedMoive, setSavedMoive] = useState([]);
+  const [savedMovie, setSavedMovie] = useState([]);
   const url = "https://api.nomoreparties.co/";
   const time =
     Math.floor(movie.duration / 60) +
@@ -26,30 +26,28 @@ export default function MoviesCard({
   }
 
   function unSaveMovie() {
-    handleUnSaveMovie(savedMoive);
+    handleUnSaveMovie(savedMovie);
     setIsSaved(false);
   }
 
   useEffect(() => {
     isMainMoviesSection
-      ? savedMoives.map((item) => {
+      ? savedMovies.map((item) => {
           if (item.movieId === movie.id) {
             setIsSaved(true);
-            setSavedMoive(item);
+            setSavedMovie(item);
           }
           return item;
         })
-      : savedMoives.map((item) => {
+      : savedMovies.map((item) => {
           if (item.movieId === movie.movieId) {
             setIsSaved(true);
-            setSavedMoive(item);
+            setSavedMovie(item);
           }
           return item;
         });
   }, [
-    isSaved,
-    savedMoives,
-    savedMoive,
+    savedMovies,
     isMainMoviesSection,
     movie.id,
     movie.movieId,
@@ -61,11 +59,7 @@ export default function MoviesCard({
         <a href={movie.trailerLink} rel="noreferrer" target="_blank">
           <img
             className="moviescard__image"
-            src={
-              !isMainMoviesSection && isSavedMoviesSection
-                ? movie.image
-                : `${url}/${movie.image.url}`
-            }
+            src={movie.image.url ? `${url}/${movie.image.url}` : movie.image}
             alt={movie.nameRU}
           />
         </a>

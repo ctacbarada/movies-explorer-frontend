@@ -12,11 +12,13 @@ export default function SavedMovies({
   moreMovies,
   buttonMore,
   isSavedMoviesSection,
-  savedMoives
+  savedMovies,
+  sortFilms,
+  activeToggle
 }) {
   return (
     <>
-      <SearchForm />
+      <SearchForm sortFilms={sortFilms} activeToggle={activeToggle}/>
       <MoviesCardList
         handleSaveMovie={handleSaveMovie}
         handleUnSaveMovie={handleUnSaveMovie}
@@ -26,7 +28,7 @@ export default function SavedMovies({
         moreMovies={moreMovies}
         buttonMore={buttonMore}
         isSavedMoviesSection={isSavedMoviesSection}
-        savedMoives={savedMoives}
+        savedMovies={savedMovies}
       />
     </>
   );
