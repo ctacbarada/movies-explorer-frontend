@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 import MoreMovies from "../MoreMovies/MoreMovies";
@@ -16,6 +16,9 @@ export default function MoviesCardList({
   isMainMoviesSection,
   savedMovies,
 }) {
+
+
+
   return isLoading ? (
     <>
       {}

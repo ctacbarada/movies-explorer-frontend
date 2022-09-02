@@ -26,10 +26,11 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [recivedMoives, setRecivedMoives] = useState([]);
-  const [savedMoives, setSavedMoives] = useState([]);
   const [copyRecivedMoives, setCopyRecivedMoives] = useState([]);
+  const [savedMoives, setSavedMoives] = useState([]);
   const [copySavedMoives, setCopySavedMoives] = useState([]);
   const [isToggleActiveMoives, setIsToggleActiveMoives] = useState(false);
+  const [value, setValue] = useState("");
 
   const windowMovies =
     window.location.href === "http://stan.nomoredomains.xyz/movies" ||
@@ -111,11 +112,6 @@ function App() {
       .then((res) => {
         setRecivedMoives(res);
         const copy = Object.assign([], res);
-        // setCopyRecivedMoives(
-        //   localStorage.getItem("lastFoundMovies")
-        //     ? JSON.parse(localStorage.getItem("lastFoundMovies"))
-        //     : copy
-        // );
         if (localStorage.getItem("lastFoundMovies")) {
           if (localStorage.getItem("isMoviesToggleActive")) {
             setIsToggleActiveMoives(true);
@@ -130,12 +126,6 @@ function App() {
         } else {
           setCopyRecivedMoives(copy);
         }
-
-        // setCopyRecivedMoives(
-        //   localStorage.getItem("isMoviesToggleActive")
-        //     ? JSON.parse(localStorage.getItem("isMoviesToggleActive"))
-        //     : JSON.parse(localStorage.getItem("lastSearchMovies"))
-        // );
         setIsLoading(true);
         if (innerWidth > 1280 && innerWidth > 769) {
           setCounter(12);
@@ -146,11 +136,7 @@ function App() {
         }
       })
       .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
-  }, [
-    innerWidth,
-    token,
-    // isToggleActiveMoives,
-  ]);
+  }, [innerWidth, token, isToggleActiveMoives]);
 
   function activateToggle(isToggleActive) {
     if (isToggleActive) {
@@ -158,20 +144,21 @@ function App() {
     } else {
       setIsToggleActiveMoives(false);
       localStorage.removeItem("isMoviesToggleActive");
+      localStorage.removeItem("isSavedMoviesToggleActive");
     }
   }
 
   useEffect(() => {
     if (windowMovies) {
       if (isToggleActiveMoives) {
-        console.log("isToggleActiveMoives", isToggleActiveMoives);
+        // console.log("isToggleActiveMoives", isToggleActiveMoives);
         const movie = Object.values(copyRecivedMoives).filter((item) => {
           return item.duration < 40 ? item : null;
         });
         setCopyRecivedMoives(movie);
         localStorage.setItem("isMoviesToggleActive", JSON.stringify(movie));
       } else {
-        setCopyRecivedMoives(recivedMoives);
+        setCopyRecivedMoives(copyRecivedMoives);
         setIsToggleActiveMoives(false);
       }
     } else {
@@ -179,16 +166,17 @@ function App() {
         const movie = Object.values(copySavedMoives).filter((item) => {
           return item.duration < 40 ? item : null;
         });
+        setCopySavedMoives(movie);
         localStorage.setItem(
           "isSavedMoviesToggleActive",
           JSON.stringify(movie)
         );
-        setCopySavedMoives(movie);
       } else {
-        setCopySavedMoives(savedMoives);
+        setCopySavedMoives(copySavedMoives);
+        setIsToggleActiveMoives(false);
       }
     }
-  }, [isToggleActiveMoives]);
+  }, [isToggleActiveMoives, value]);
 
   function findMovies(value) {
     if (windowMovies) {
@@ -206,6 +194,7 @@ function App() {
       localStorage.setItem("lastFoundSavedMovies", JSON.stringify(movie));
       localStorage.setItem("valueSavedMovies", value);
     }
+    setValue(value);
   }
 
   function buttonMore() {
@@ -242,21 +231,34 @@ function App() {
       movie.id,
       token
     )
-      .then((res) => {})
+      .then((newMovie) => {
+        setCopySavedMoives([newMovie, ...copySavedMoives]);
+      })
       .catch((err) => console.log(`Ошибка удаления фильма: ${err}`));
   }
 
   function handleUnSaveMovie(savedMoive) {
+    console.log(savedMoive);
     MainApi.deleteMovie(savedMoive._id, token)
-      .then((res) => {})
+      .then(() => {
+        setCopySavedMoives((state) =>
+          state.filter((item) => {
+            localStorage.setItem("lastFoundSavedMovies", JSON.stringify(state));
+            return item._id !== savedMoive._id;
+          })
+        );
+      })
       .catch((err) => console.log(`Ошибка сохранения фильма: ${err}`));
   }
 
   useEffect(() => {
     MainApi.getMovies(token)
       .then((res) => {
+        // console.log("copySavedMoivesGET:", copySavedMoives);
         setSavedMoives(res);
         const copy = Object.assign([], res);
+
+        localStorage.setItem("lastFoundSavedMovies", JSON.stringify(res));
 
         if (localStorage.getItem("lastFoundSavedMovies")) {
           if (localStorage.getItem("isSavedMoviesToggleActive")) {
@@ -270,21 +272,8 @@ function App() {
             );
           }
         } else {
-          if (localStorage.getItem("isSavedMoviesToggleActive")) {
-            setIsToggleActiveMoives(true);
-            setCopySavedMoives(
-              JSON.parse(localStorage.getItem("isSavedMoviesToggleActive"))
-            );
-          } else {
-            setCopySavedMoives(copy);
-          }
+          setCopySavedMoives(copy);
         }
-
-        // setCopySavedMoives(
-        //   localStorage.getItem("lastFoundSavedMovies")
-        //     ? JSON.parse(localStorage.getItem("lastFoundSavedMovies"))
-        //     : copy
-        // );
         if (innerWidth > 1280 && innerWidth > 769) {
           setCounter(12);
         } else if (innerWidth <= 768 && innerWidth > 321) {
@@ -294,58 +283,7 @@ function App() {
         }
       })
       .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
-  }, [innerWidth, token]);
-
-  // function sortFilms(inputSearchBar) {
-  //   if (windowMovies) {
-  //     localStorage.setItem("inputSearchBarMovies", inputSearchBar);
-  //     const movie = Object.values(recivedMoives).filter((item) => {
-  //       return item.nameRU.includes(inputSearchBar) ? item : null;
-  //     });
-  //     setCopyRecivedMoives(movie);
-  //     localStorage.setItem("lastSearchMovies", JSON.stringify(movie));
-  //   } else {
-  //     const movie = Object.values(savedMoives).filter((item) => {
-  //       return item.nameRU.includes(inputSearchBar) ? item : null;
-  //     });
-  //     setCopySavedMoives(movie);
-  //     localStorage.setItem("lastSearchSavedMovies", JSON.stringify(movie));
-  //   }
-  // }
-
-  // function activeToggle(isToggleActive) {
-  //   if (windowMovies) {
-  //     if (!isToggleActive) {
-  //       const movie = Object.values(copyRecivedMoives).filter((item) => {
-  //         return item.duration < 40 ? item : null;
-  //       });
-  //       setCopyRecivedMoives(movie);
-  //       setIsToggleActiveMoives(true);
-  //       localStorage.setItem("isMoviesToggleActive", JSON.stringify(movie));
-  //       localStorage.setItem(
-  //         "isMoviesToggleActiveWitchoutSearch",
-  //         JSON.stringify(movie)
-  //       );
-  //     } else {
-  //       setCopyRecivedMoives(recivedMoives);
-  //       setIsToggleActiveMoives(false);
-  //       localStorage.removeItem("isMoviesToggleActive");
-  //     }
-  //   } else {
-  //     if (!isToggleActive) {
-  //       const movie = Object.values(copySavedMoives).filter((item) => {
-  //         return item.duration < 40 ? item : null;
-  //       });
-  //       localStorage.setItem(
-  //         "isSavedMoviesToggleActive",
-  //         JSON.stringify(movie)
-  //       );
-  //       setCopySavedMoives(movie);
-  //     } else {
-  //       setCopySavedMoives(savedMoives);
-  //     }
-  //   }
-  // }
+  }, [innerWidth, token, isToggleActiveMoives]);
 
   return (
     <div className="App">
