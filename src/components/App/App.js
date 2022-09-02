@@ -29,7 +29,14 @@ function App() {
   const [savedMoives, setSavedMoives] = useState([]);
   const [copyRecivedMoives, setCopyRecivedMoives] = useState([]);
   const [copySavedMoives, setCopySavedMoives] = useState([]);
-  const [isToggleActiveMoives, setIsToggleActiveMoives] = useState([]);
+  const [isToggleActiveMoives, setIsToggleActiveMoives] = useState(false);
+
+  const windowMovies =
+    window.location.href === "http://stan.nomoredomains.xyz/movies" ||
+    window.location.href === "http://localhost:3000/movies";
+  const windowSavedMovies =
+    window.location.href === "http://stan.nomoredomains.xyz/saved-movies" ||
+    window.location.href === "http://localhost:3000/saved-movies";
 
   const [isLoading, setIsLoading] = useState(false);
   const [counter, setCounter] = useState(12);
@@ -73,7 +80,6 @@ function App() {
           localStorage.setItem("jwt", data.token);
           setIsUserLoggedIn(true);
           setToken(data.token);
-          // setUserId(data.userId)
           history("/movies");
         }
       })
@@ -101,12 +107,35 @@ function App() {
   }, []);
 
   useEffect(() => {
-    MoviesApi.getMovies()
+    MoviesApi.getMovies(token)
       .then((res) => {
         setRecivedMoives(res);
         const copy = Object.assign([], res);
-        setCopyRecivedMoives(copy);
-        setIsToggleActiveMoives(copy);
+        // setCopyRecivedMoives(
+        //   localStorage.getItem("lastFoundMovies")
+        //     ? JSON.parse(localStorage.getItem("lastFoundMovies"))
+        //     : copy
+        // );
+        if (localStorage.getItem("lastFoundMovies")) {
+          if (localStorage.getItem("isMoviesToggleActive")) {
+            setIsToggleActiveMoives(true);
+            setCopyRecivedMoives(
+              JSON.parse(localStorage.getItem("isMoviesToggleActive"))
+            );
+          } else {
+            setCopyRecivedMoives(
+              JSON.parse(localStorage.getItem("lastFoundMovies"))
+            );
+          }
+        } else {
+          setCopyRecivedMoives(copy);
+        }
+
+        // setCopyRecivedMoives(
+        //   localStorage.getItem("isMoviesToggleActive")
+        //     ? JSON.parse(localStorage.getItem("isMoviesToggleActive"))
+        //     : JSON.parse(localStorage.getItem("lastSearchMovies"))
+        // );
         setIsLoading(true);
         if (innerWidth > 1280 && innerWidth > 769) {
           setCounter(12);
@@ -117,7 +146,67 @@ function App() {
         }
       })
       .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
-  }, [innerWidth]);
+  }, [
+    innerWidth,
+    token,
+    // isToggleActiveMoives,
+  ]);
+
+  function activateToggle(isToggleActive) {
+    if (isToggleActive) {
+      setIsToggleActiveMoives(true);
+    } else {
+      setIsToggleActiveMoives(false);
+      localStorage.removeItem("isMoviesToggleActive");
+    }
+  }
+
+  useEffect(() => {
+    if (windowMovies) {
+      if (isToggleActiveMoives) {
+        console.log("isToggleActiveMoives", isToggleActiveMoives);
+        const movie = Object.values(copyRecivedMoives).filter((item) => {
+          return item.duration < 40 ? item : null;
+        });
+        setCopyRecivedMoives(movie);
+        localStorage.setItem("isMoviesToggleActive", JSON.stringify(movie));
+      } else {
+        setCopyRecivedMoives(recivedMoives);
+        setIsToggleActiveMoives(false);
+      }
+    } else {
+      if (isToggleActiveMoives) {
+        const movie = Object.values(copySavedMoives).filter((item) => {
+          return item.duration < 40 ? item : null;
+        });
+        localStorage.setItem(
+          "isSavedMoviesToggleActive",
+          JSON.stringify(movie)
+        );
+        setCopySavedMoives(movie);
+      } else {
+        setCopySavedMoives(savedMoives);
+      }
+    }
+  }, [isToggleActiveMoives]);
+
+  function findMovies(value) {
+    if (windowMovies) {
+      const movie = Object.values(recivedMoives).filter((item) => {
+        return item.nameRU.includes(value) ? item : null;
+      });
+      setCopyRecivedMoives(movie);
+      localStorage.setItem("lastFoundMovies", JSON.stringify(movie));
+      localStorage.setItem("valueMovies", value);
+    } else {
+      const movie = Object.values(savedMoives).filter((item) => {
+        return item.nameRU.includes(value) ? item : null;
+      });
+      setCopySavedMoives(movie);
+      localStorage.setItem("lastFoundSavedMovies", JSON.stringify(movie));
+      localStorage.setItem("valueSavedMovies", value);
+    }
+  }
 
   function buttonMore() {
     if (window.innerWidth >= 1140) {
@@ -168,7 +257,34 @@ function App() {
       .then((res) => {
         setSavedMoives(res);
         const copy = Object.assign([], res);
-        setCopySavedMoives(copy);
+
+        if (localStorage.getItem("lastFoundSavedMovies")) {
+          if (localStorage.getItem("isSavedMoviesToggleActive")) {
+            setIsToggleActiveMoives(true);
+            setCopySavedMoives(
+              JSON.parse(localStorage.getItem("isSavedMoviesToggleActive"))
+            );
+          } else {
+            setCopySavedMoives(
+              JSON.parse(localStorage.getItem("lastFoundSavedMovies"))
+            );
+          }
+        } else {
+          if (localStorage.getItem("isSavedMoviesToggleActive")) {
+            setIsToggleActiveMoives(true);
+            setCopySavedMoives(
+              JSON.parse(localStorage.getItem("isSavedMoviesToggleActive"))
+            );
+          } else {
+            setCopySavedMoives(copy);
+          }
+        }
+
+        // setCopySavedMoives(
+        //   localStorage.getItem("lastFoundSavedMovies")
+        //     ? JSON.parse(localStorage.getItem("lastFoundSavedMovies"))
+        //     : copy
+        // );
         if (innerWidth > 1280 && innerWidth > 769) {
           setCounter(12);
         } else if (innerWidth <= 768 && innerWidth > 321) {
@@ -180,42 +296,56 @@ function App() {
       .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
   }, [innerWidth, token]);
 
-  function sortFilms(inputSearchBar) {
-    // if (window.location.href === "http://localhost:3000/movies") {
-    if (window.location.href === "http://stan.nomoredomains.xyz/movies") {
-      const movie = Object.values(recivedMoives).filter((item) => {
-        return item.nameRU.includes(inputSearchBar) ? item : null;
-      });
-      setCopyRecivedMoives(movie);
-      setIsToggleActiveMoives(movie);
-      // setCopySavedMoives(movie);
-    } else {
-      const movie = Object.values(savedMoives).filter((item) => {
-        return item.nameRU.includes(inputSearchBar) ? item : null;
-      });
-      setCopySavedMoives(movie);
-      setIsToggleActiveMoives(movie);
-    }
-  }
+  // function sortFilms(inputSearchBar) {
+  //   if (windowMovies) {
+  //     localStorage.setItem("inputSearchBarMovies", inputSearchBar);
+  //     const movie = Object.values(recivedMoives).filter((item) => {
+  //       return item.nameRU.includes(inputSearchBar) ? item : null;
+  //     });
+  //     setCopyRecivedMoives(movie);
+  //     localStorage.setItem("lastSearchMovies", JSON.stringify(movie));
+  //   } else {
+  //     const movie = Object.values(savedMoives).filter((item) => {
+  //       return item.nameRU.includes(inputSearchBar) ? item : null;
+  //     });
+  //     setCopySavedMoives(movie);
+  //     localStorage.setItem("lastSearchSavedMovies", JSON.stringify(movie));
+  //   }
+  // }
 
-  function activeToggle(isToggleActive) {
-    console.log(isToggleActive)
-    if (!isToggleActive) {
-      const movie = Object.values(
-        // window.location.href === "http://localhost:3000/movies"
-        window.location.href === "http://stan.nomoredomains.xyz/movies"
-          ? copyRecivedMoives
-          : copySavedMoives
-      ).filter((item) => {
-        return item.duration < 40 ? item : null;
-      });
-      setCopyRecivedMoives(movie);
-      setCopySavedMoives(movie);
-    } else {
-      setCopyRecivedMoives(recivedMoives);
-      setCopySavedMoives(savedMoives);
-    }
-  }
+  // function activeToggle(isToggleActive) {
+  //   if (windowMovies) {
+  //     if (!isToggleActive) {
+  //       const movie = Object.values(copyRecivedMoives).filter((item) => {
+  //         return item.duration < 40 ? item : null;
+  //       });
+  //       setCopyRecivedMoives(movie);
+  //       setIsToggleActiveMoives(true);
+  //       localStorage.setItem("isMoviesToggleActive", JSON.stringify(movie));
+  //       localStorage.setItem(
+  //         "isMoviesToggleActiveWitchoutSearch",
+  //         JSON.stringify(movie)
+  //       );
+  //     } else {
+  //       setCopyRecivedMoives(recivedMoives);
+  //       setIsToggleActiveMoives(false);
+  //       localStorage.removeItem("isMoviesToggleActive");
+  //     }
+  //   } else {
+  //     if (!isToggleActive) {
+  //       const movie = Object.values(copySavedMoives).filter((item) => {
+  //         return item.duration < 40 ? item : null;
+  //       });
+  //       localStorage.setItem(
+  //         "isSavedMoviesToggleActive",
+  //         JSON.stringify(movie)
+  //       );
+  //       setCopySavedMoives(movie);
+  //     } else {
+  //       setCopySavedMoives(savedMoives);
+  //     }
+  //   }
+  // }
 
   return (
     <div className="App">
@@ -249,8 +379,9 @@ function App() {
                     isSavedMoviesSection={isSavedMoviesSection}
                     isMainMoviesSection={isMainMoviesSection}
                     savedMovies={copySavedMoives}
-                    sortFilms={sortFilms}
-                    activeToggle={activeToggle}
+                    findMovies={findMovies}
+                    activateToggle={activateToggle}
+                    isToggleActiveMoives={isToggleActiveMoives}
                   />
                   <Footer />
                 </ProtectedRoute>
@@ -275,8 +406,9 @@ function App() {
                   buttonMore={buttonMore}
                   isSavedMoviesSection={isSavedMoviesSection}
                   savedMovies={copySavedMoives}
-                  sortFilms={sortFilms}
-                  activeToggle={activeToggle}
+                  findMovies={findMovies}
+                  activateToggle={activateToggle}
+                  isToggleActiveMoives={isToggleActiveMoives}
                 />
                 <Footer />
               </>

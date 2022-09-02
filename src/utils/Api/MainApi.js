@@ -29,13 +29,15 @@ class Api {
     return await (res.ok ? res.json() : Promise.reject(res.status));
   }
 
-  getMovies(token) {
-    return fetch(`${this._baseUrl}/movies`, {
+  async getMovies(token) {
+    const res = await fetch(`${this._baseUrl}/movies`, {
+      method: "GET",
       headers: {
         ...this._headers,
         authorization: "Bearer " + token,
       },
-    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
+    });
+    return await (res.ok ? res.json() : Promise.reject(res.status));
   }
 
   saveMovie(
@@ -86,8 +88,8 @@ class Api {
 }
 
 export const MainApi = new Api({
-  baseUrl: "https://api.stan.nomoredomains.xyz",
-  // baseUrl: "http://localhost:3001",
+  // baseUrl: "https://api.stan.nomoredomains.xyz",
+  baseUrl: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },

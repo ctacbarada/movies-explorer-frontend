@@ -1,18 +1,23 @@
 import "./SearchForm.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function SearchForm({ sortFilms, activeToggle }) {
+export default function SearchForm({ findMovies, activateToggle, isToggleActiveMoives}) {
   const [isToggleActive, setIsToggleActive] = useState(false);
-  const [inputSearchBar, setInputSearchBar] = useState("");
+
+  const windowMovies =
+    window.location.href === "http://stan.nomoredomains.xyz/movies" ||
+    window.location.href === "http://localhost:3000/movies";
+  const windowSavedMovies =
+    window.location.href === "http://stan.nomoredomains.xyz/saved-movies" ||
+    window.location.href === "http://localhost:3000/saved-movies";
 
   function inputFilm(e) {
-    sortFilms(e.target.value);
-    setInputSearchBar(e.target.value);
+    findMovies(e.target.value);
+    setIsToggleActive(false)
   }
 
   function handleSubmitSearchForm(e) {
     e.preventDefault();
-    setInputSearchBar(inputSearchBar);
   }
 
   return (
@@ -26,6 +31,7 @@ export default function SearchForm({ sortFilms, activeToggle }) {
         <input
           className="searchform__input"
           name="searchform"
+          value={windowMovies ? localStorage.getItem("valueMovies") : localStorage.getItem("valueSavedMovies")}
           type="text"
           placeholder="Фильм"
           onChange={inputFilm}
@@ -38,16 +44,14 @@ export default function SearchForm({ sortFilms, activeToggle }) {
         />
         <button
           className={
-            isToggleActive
-              ? "searchform__toggle-enabled"
-              : "searchform__toggle-enabled searchform__toggle-disabled"
+            isToggleActiveMoives ? "searchform__toggle-enabled" : "searchform__toggle-enabled searchform__toggle-disabled"
           }
           type="button"
           aria-label="Короткометражки"
-          selected={isToggleActive}
+          // selected={isToggleActive}
           onClick={() => {
             setIsToggleActive(!isToggleActive);
-            activeToggle(isToggleActive);
+            activateToggle(isToggleActive);
           }}
         />
         <p className="searchform__toggle-name">Короткометражки</p>

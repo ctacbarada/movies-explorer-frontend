@@ -14,12 +14,17 @@ export default function Movies({
   isSavedMoviesSection,
   isMainMoviesSection,
   savedMovies,
-  sortFilms,
-  activeToggle
+  findMovies,
+  activateToggle,
+  isToggleActiveMoives,
 }) {
   return (
     <>
-      <SearchForm sortFilms={sortFilms} activeToggle={activeToggle}/>
+      <SearchForm
+        findMovies={findMovies}
+        activateToggle={activateToggle}
+        isToggleActiveMoives={isToggleActiveMoives}
+      />
       <MoviesCardList
         handleSaveMovie={handleSaveMovie}
         handleUnSaveMovie={handleUnSaveMovie}

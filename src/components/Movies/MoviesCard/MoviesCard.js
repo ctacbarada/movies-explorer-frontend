@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "./MoviesCard.css";
 
 export default function MoviesCard({
@@ -10,6 +9,7 @@ export default function MoviesCard({
   isMainMoviesSection,
   savedMovies,
 }) {
+  // console.log("movie:", movie)
   const [isSaved, setIsSaved] = useState(false);
   const [savedMovie, setSavedMovie] = useState([]);
   const url = "https://api.nomoreparties.co/";
