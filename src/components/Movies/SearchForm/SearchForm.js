@@ -1,8 +1,13 @@
 import "./SearchForm.css";
-import React, { useEffect, useState } from "react";
+import { React, useState } from "react";
 
-export default function SearchForm({ findMovies, activateToggle, isToggleActiveMoives}) {
+export default function SearchForm({
+  findMovies,
+  activateToggle,
+  isToggleActiveMoives,
+}) {
   const [isToggleActive, setIsToggleActive] = useState(false);
+  const [value, setValue] = useState('')
 
   const windowMovies =
     window.location.href === "http://stan.nomoredomains.xyz/movies" ||
@@ -13,11 +18,12 @@ export default function SearchForm({ findMovies, activateToggle, isToggleActiveM
 
   function inputFilm(e) {
     findMovies(e.target.value);
-    setIsToggleActive(false)
+    setIsToggleActive(false);
   }
 
-  function handleSubmitSearchForm(e) {
-    e.preventDefault();
+  function onSubmit(e) {
+    e.preventDefault()
+    setIsToggleActive(false);
   }
 
   return (
@@ -25,13 +31,17 @@ export default function SearchForm({ findMovies, activateToggle, isToggleActiveM
       <form
         className="searchform__form"
         name="searchform"
-        onSubmit={handleSubmitSearchForm}
+        onSubmit={onSubmit}
       >
         <div className="searchform__icon"></div>
         <input
           className="searchform__input"
           name="searchform"
-          value={windowMovies ? localStorage.getItem("valueMovies") : localStorage.getItem("valueSavedMovies")}
+          value={
+            windowMovies
+              ? localStorage.getItem("valueMovies")
+              : localStorage.getItem("valueSavedMovies")
+          }
           type="text"
           placeholder="Фильм"
           onChange={inputFilm}
@@ -44,11 +54,12 @@ export default function SearchForm({ findMovies, activateToggle, isToggleActiveM
         />
         <button
           className={
-            isToggleActiveMoives ? "searchform__toggle-enabled" : "searchform__toggle-enabled searchform__toggle-disabled"
+            isToggleActiveMoives
+              ? "searchform__toggle-enabled"
+              : "searchform__toggle-enabled searchform__toggle-disabled"
           }
           type="button"
           aria-label="Короткометражки"
-          // selected={isToggleActive}
           onClick={() => {
             setIsToggleActive(!isToggleActive);
             activateToggle(isToggleActive);

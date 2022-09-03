@@ -16,12 +16,8 @@ export default function MoviesCardList({
   isMainMoviesSection,
   savedMovies,
 }) {
-
-
-
   return isLoading ? (
     <>
-      {}
       <section className="moviescardlist" aria-label="Фильмы">
         {recivedMoives.slice(0, counter).map((movie, i) => (
           <MoviesCard

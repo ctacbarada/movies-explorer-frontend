@@ -151,7 +151,6 @@ function App() {
   useEffect(() => {
     if (windowMovies) {
       if (isToggleActiveMoives) {
-        // console.log("isToggleActiveMoives", isToggleActiveMoives);
         const movie = Object.values(copyRecivedMoives).filter((item) => {
           return item.duration < 40 ? item : null;
         });
@@ -238,7 +237,6 @@ function App() {
   }
 
   function handleUnSaveMovie(savedMoive) {
-    console.log(savedMoive);
     MainApi.deleteMovie(savedMoive._id, token)
       .then(() => {
         setCopySavedMoives((state) =>
@@ -254,12 +252,9 @@ function App() {
   useEffect(() => {
     MainApi.getMovies(token)
       .then((res) => {
-        // console.log("copySavedMoivesGET:", copySavedMoives);
         setSavedMoives(res);
         const copy = Object.assign([], res);
-
         localStorage.setItem("lastFoundSavedMovies", JSON.stringify(res));
-
         if (localStorage.getItem("lastFoundSavedMovies")) {
           if (localStorage.getItem("isSavedMoviesToggleActive")) {
             setIsToggleActiveMoives(true);
