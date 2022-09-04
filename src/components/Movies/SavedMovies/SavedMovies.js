@@ -8,9 +8,6 @@ export default function SavedMovies({
   handleUnSaveMovie,
   recivedMoives,
   isLoading,
-  counter,
-  moreMovies,
-  buttonMore,
   isSavedMoviesSection,
   savedMovies,
   findMovies,
@@ -23,18 +20,18 @@ export default function SavedMovies({
         findMovies={findMovies}
         activateToggle={activateToggle}
         isToggleActiveMoives={isToggleActiveMoives}
-      />
-      <MoviesCardList
-        handleSaveMovie={handleSaveMovie}
-        handleUnSaveMovie={handleUnSaveMovie}
         recivedMoives={recivedMoives}
-        isLoading={isLoading}
-        counter={counter}
-        moreMovies={moreMovies}
-        buttonMore={buttonMore}
-        isSavedMoviesSection={isSavedMoviesSection}
-        savedMovies={savedMovies}
       />
+      {recivedMoives.length === 0 ? null : (
+        <MoviesCardList
+          handleSaveMovie={handleSaveMovie}
+          handleUnSaveMovie={handleUnSaveMovie}
+          recivedMoives={recivedMoives}
+          isLoading={isLoading}
+          isSavedMoviesSection={isSavedMoviesSection}
+          savedMovies={savedMovies}
+        />
+      )}
     </>
   );
 }

@@ -32,12 +32,14 @@
 
   width: 410px;
   height: 31px;
+
+  margin: 0;
 }
 
 .profile__string:first-of-type {
   border-bottom: 1px solid #e8e8e8;
 
-  margin: 0 0 17px;
+  margin: 0;
 }
 
 .profile__string-name {
@@ -99,6 +101,22 @@
   opacity: .7;
   transition: opacity .2s linear;
   cursor: pointer;
+}
+
+.profile__errors {
+  text-align: right;
+  height: 20px;
+  font-size: 10px;
+  margin: 12px 0 0;
+  color: #ee3465;
+}
+
+.profile__confirm-message {
+  text-align: center;
+  height: 20px;
+  font-size: 10px;
+  margin: 12px 0 0;
+  color: #ee3465;
 }
 
 @media screen and (max-width: 768px) {

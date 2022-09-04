@@ -1,29 +1,37 @@
 import "./SearchForm.css";
 import { React, useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function SearchForm({
   findMovies,
   activateToggle,
   isToggleActiveMoives,
+  recivedMoives,
 }) {
-  const [isToggleActive, setIsToggleActive] = useState(false);
-  const [value, setValue] = useState('')
-
   const windowMovies =
     window.location.href === "http://stan.nomoredomains.xyz/movies" ||
     window.location.href === "http://localhost:3000/movies";
   const windowSavedMovies =
     window.location.href === "http://stan.nomoredomains.xyz/saved-movies" ||
     window.location.href === "http://localhost:3000/saved-movies";
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+    defaultValues: {
+      inputFindMovie: windowMovies ? localStorage.getItem("valueMovies") : null,
+    },
+  });
+  const [isToggleActive, setIsToggleActive] = useState(false);
+  const inputFindMovieValue = watch("inputFindMovie");
 
-  function inputFilm(e) {
-    findMovies(e.target.value);
+  function onSubmit() {
+    findMovies(inputFindMovieValue);
     setIsToggleActive(false);
-  }
-
-  function onSubmit(e) {
-    e.preventDefault()
-    setIsToggleActive(false);
+    localStorage.setItem("valueMovies", inputFindMovieValue);
   }
 
   return (
@@ -31,21 +39,16 @@ export default function SearchForm({
       <form
         className="searchform__form"
         name="searchform"
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="searchform__icon"></div>
         <input
+          {...register("inputFindMovie", {
+            required: "Нужно ввести ключевое слово",
+          })}
           className="searchform__input"
-          name="searchform"
-          value={
-            windowMovies
-              ? localStorage.getItem("valueMovies")
-              : localStorage.getItem("valueSavedMovies")
-          }
           type="text"
           placeholder="Фильм"
-          onChange={inputFilm}
-          required
         />
         <button
           className="searchform__button-confirm"
@@ -67,6 +70,12 @@ export default function SearchForm({
         />
         <p className="searchform__toggle-name">Короткометражки</p>
       </form>
+      {errors?.inputFindMovie && (
+        <p className="searchform__errors">Нужно ввести ключевое слово</p>
+      )}
+      {recivedMoives.length === 0 && (
+        <p className="searchform__errors">Ничего не найдено</p>
+      )}
     </section>
   );
 }

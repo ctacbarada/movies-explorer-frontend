@@ -1,5 +1,6 @@
 .header {
-  max-width: 1280px;
+  width: calc(100vw * (1140 / 1280));
+  max-width: 1140px;
   height: 74px;
   display: flex;
   justify-content: space-between;
@@ -11,7 +12,7 @@
   width: 38px;
   height: 38px;
   background-image: url(../../images/logo.svg);
-  margin: 18px 62px 18px 70px;
+  margin: 18px 0;
 }
 
 .header__logo:hover {
@@ -81,7 +82,7 @@
   width: 100px;
   height: 32px;
   background-image: url(../../images/profile-button.svg);
-  margin: 21px 70px 21px 0;
+  margin: 21px 0 21px;
 }
 
 .header__profile-button:hover {

@@ -24,6 +24,7 @@ function App() {
   const [moreMovies, setMoreMovies] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
+  const [confirmMessage, setConfirmMessage] = useState(false);
 
   const [recivedMoives, setRecivedMoives] = useState([]);
   const [copyRecivedMoives, setCopyRecivedMoives] = useState([]);
@@ -65,8 +66,9 @@ function App() {
   function handleRegister(name, email, password) {
     return Auth.register(name, email, password)
       .then((res) => {
+        handleLogin(email, password);
         setCurrentUser(res);
-        history("/signin"); //Если форма отправлена успешна, перенаправим пользователя на страницу авторизации.
+        history("/movies");
       })
       .catch((error) => {
         console.log("Ошибка регистрации:");
@@ -90,12 +92,21 @@ function App() {
       });
   }
 
-  function handleUpdateUser({ name, email }) {
+  function onUpdateUseState() {
+    setConfirmMessage(false);
+    setErrorMessage("");
+  }
+
+  function handleUpdateUser(name, email) {
     MainApi.setUserInfo(name, email, token)
       .then((res) => {
         setCurrentUser(res);
+        setConfirmMessage(true);
       })
-      .catch((err) => console.log(`Ошибка редактирования профиля: ${err}`));
+      .catch((error) => {
+        console.log(`Ошибка редактирования профиля: ${error}`);
+        setErrorMessage("Пользователь с такой почтой уже существует");
+      });
   }
 
   function handleSignOut() {
@@ -127,11 +138,11 @@ function App() {
           setCopyRecivedMoives(copy);
         }
         setIsLoading(true);
-        if (innerWidth > 1280 && innerWidth > 769) {
+        if (innerWidth > 769) {
           setCounter(12);
-        } else if (innerWidth <= 768 && innerWidth > 321) {
+        } else if (innerWidth > 321) {
           setCounter(8);
-        } else if (innerWidth <= 320) {
+        } else {
           setCounter(5);
         }
       })
@@ -144,7 +155,6 @@ function App() {
     } else {
       setIsToggleActiveMoives(false);
       localStorage.removeItem("isMoviesToggleActive");
-      localStorage.removeItem("isSavedMoviesToggleActive");
     }
   }
 
@@ -166,32 +176,29 @@ function App() {
           return item.duration < 40 ? item : null;
         });
         setCopySavedMoives(movie);
-        localStorage.setItem(
-          "isSavedMoviesToggleActive",
-          JSON.stringify(movie)
-        );
       } else {
-        setCopySavedMoives(copySavedMoives);
+        setCopySavedMoives(savedMoives);
         setIsToggleActiveMoives(false);
       }
     }
-  }, [isToggleActiveMoives, value]);
+  }, [isToggleActiveMoives]);
 
   function findMovies(value) {
     if (windowMovies) {
       const movie = Object.values(recivedMoives).filter((item) => {
-        return item.nameRU.includes(value) ? item : null;
+        return item.nameRU.toLowerCase().includes(value.toLowerCase())
+          ? item
+          : null;
       });
       setCopyRecivedMoives(movie);
       localStorage.setItem("lastFoundMovies", JSON.stringify(movie));
-      localStorage.setItem("valueMovies", value);
     } else {
       const movie = Object.values(savedMoives).filter((item) => {
-        return item.nameRU.includes(value) ? item : null;
+        return item.nameRU.toLowerCase().includes(value.toLowerCase())
+          ? item
+          : null;
       });
       setCopySavedMoives(movie);
-      localStorage.setItem("lastFoundSavedMovies", JSON.stringify(movie));
-      localStorage.setItem("valueSavedMovies", value);
     }
     setValue(value);
   }
@@ -199,17 +206,17 @@ function App() {
   function buttonMore() {
     if (window.innerWidth >= 1140) {
       setCounter(counter + 3);
-      if (counter >= recivedMoives.length) {
+      if (counter >= copyRecivedMoives.length) {
         setMoreMovies(false);
       }
     } else if (window.innerWidth <= 1140 && window.innerWidth >= 768) {
       setCounter(counter + 2);
-      if (counter >= recivedMoives.length) {
+      if (counter >= copyRecivedMoives.length) {
         setMoreMovies(false);
       }
     } else if (window.innerWidth <= 765) {
       setCounter(counter + 1);
-      if (counter >= recivedMoives.length) {
+      if (counter >= copyRecivedMoives.length) {
         setMoreMovies(false);
       }
     }
@@ -241,7 +248,6 @@ function App() {
       .then(() => {
         setCopySavedMoives((state) =>
           state.filter((item) => {
-            localStorage.setItem("lastFoundSavedMovies", JSON.stringify(state));
             return item._id !== savedMoive._id;
           })
         );
@@ -254,31 +260,10 @@ function App() {
       .then((res) => {
         setSavedMoives(res);
         const copy = Object.assign([], res);
-        localStorage.setItem("lastFoundSavedMovies", JSON.stringify(res));
-        if (localStorage.getItem("lastFoundSavedMovies")) {
-          if (localStorage.getItem("isSavedMoviesToggleActive")) {
-            setIsToggleActiveMoives(true);
-            setCopySavedMoives(
-              JSON.parse(localStorage.getItem("isSavedMoviesToggleActive"))
-            );
-          } else {
-            setCopySavedMoives(
-              JSON.parse(localStorage.getItem("lastFoundSavedMovies"))
-            );
-          }
-        } else {
-          setCopySavedMoives(copy);
-        }
-        if (innerWidth > 1280 && innerWidth > 769) {
-          setCounter(12);
-        } else if (innerWidth <= 768 && innerWidth > 321) {
-          setCounter(8);
-        } else if (innerWidth <= 320) {
-          setCounter(5);
-        }
+        setCopySavedMoives(copy);
       })
       .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
-  }, [innerWidth, token, isToggleActiveMoives]);
+  }, [innerWidth, token]);
 
   return (
     <div className="App">
@@ -335,7 +320,6 @@ function App() {
                   recivedMoives={copySavedMoives}
                   isLoading={isLoading}
                   counter={counter}
-                  moreMovies={moreMovies}
                   buttonMore={buttonMore}
                   isSavedMoviesSection={isSavedMoviesSection}
                   savedMovies={copySavedMoives}
@@ -356,12 +340,20 @@ function App() {
                 <Profile
                   onUpdateUser={handleUpdateUser}
                   handleSignOut={handleSignOut}
+                  confirmMessage={confirmMessage}
+                  onUpdateUseState={onUpdateUseState}
+                  errorMessage={errorMessage}
                 />
               </>
             }
           />
 
-          <Route path="/signin" element={<Login handleLogin={handleLogin} />} />
+          <Route
+            path="/signin"
+            element={
+              <Login handleLogin={handleLogin} errorMessage={errorMessage} />
+            }
+          />
 
           <Route
             path="/signup"

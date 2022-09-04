@@ -3,6 +3,11 @@
   max-width: 1140px;
   height: 222px;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
   border-bottom: 1px solid #e8e8e8;
   box-sizing: border-box;
 
@@ -113,6 +118,11 @@
   margin: 0 30px 0 14px;
 }
 
+.searchform__errors {
+  margin: auto;
+  color: #EE3465;
+}
+
 @media screen and (max-width: 768px) {
   .searchform {
     width: calc(100vw * (768 / 768));
@@ -193,6 +203,13 @@
     grid-row: 2;
 
     margin: 0 max(calc(100% * (80 / 320))) 0 0;
+  }
+
+  .searchform__errors {
+    font-size: 12px;
+
+    margin-top: 12px;
+    color: #EE3465;
   }
 }
 

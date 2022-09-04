@@ -25,7 +25,6 @@ export default function MoviesCardList({
             key={isSavedMoviesSection ? i : movie.id}
             handleSaveMovie={handleSaveMovie}
             handleUnSaveMovie={handleUnSaveMovie}
-            isSavedMoviesSection={isSavedMoviesSection}
             isMainMoviesSection={isMainMoviesSection}
             savedMovies={savedMovies}
           />

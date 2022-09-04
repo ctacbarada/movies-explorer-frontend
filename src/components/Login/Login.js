@@ -1,53 +1,52 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import "./Login.css";
 
-export default function Login({ handleLogin }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function Login({ handleLogin, errorMessage}) {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+  });
 
-  function inputEmail(e) {
-    setEmail(e.target.value);
-  }
+  const [loginEmail, loginPassword] = watch(["loginEmail", "loginPassword"]);
 
-  function inputPassword(e) {
-    setPassword(e.target.value);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    handleLogin(email, password);
+  function onSubmit() {
+    handleLogin(loginEmail, loginPassword);
   }
 
   return (
     <section className="login">
       <Link to="/" className="login__logo"></Link>
       <h2 className="login__title">Рады видеть!</h2>
-      <form className="login__form" onSubmit={handleSubmit}>
+      <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
         <p className="login__name">E-mail</p>
         <input
+          {...register("loginEmail", {
+            required: "Введите e-mail",
+          })}
           className="login__input"
-          value={email}
-          onChange={inputEmail}
-          name="email"
           type="text"
           placeholder="E-mail"
-          minLength="2"
-          maxLength="40"
-          required
         />
+        <span className="login__errors">{errors?.loginEmail?.message}</span>
         <p className="login__name">Пароль</p>
         <input
+          {...register("loginPassword", {
+            required: "Введите password",
+          })}
           className="login__input"
-          value={password}
-          onChange={inputPassword}
-          name="password"
-          type="text"
+          type="password"
           placeholder="Password"
-          minLength="2"
-          maxLength="40"
-          required
         />
+        <span className="login__errors">
+          {errors?.loginPassword && "Введите password"}
+        </span>
+        <span className="register__error">{errorMessage}</span>
         <button className="login__signup" type="submit">
           Войти
         </button>

@@ -1,71 +1,75 @@
 import { React, useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import "./Register.css";
 
 export default function Register({ handleRegister, errorMessage }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+  });
 
-  function inputName(e) {
-    setName(e.target.value);
-  }
+  const [registrationName, registrationEmail, registrationPassword] = watch([
+    "registrationName",
+    "registrationEmail",
+    "registrationPassword",
+  ]);
 
-  function inputEmail(e) {
-    setEmail(e.target.value);
-  }
-
-  function inputPassword(e) {
-    setPassword(e.target.value);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    handleRegister(name, email, password);
+  function onSubmit() {
+    handleRegister(registrationName, registrationEmail, registrationPassword);
   }
 
   return (
     <section className="register">
       <Link to="/" className="register__logo"></Link>
       <h2 className="register__title">Добро пожаловать!</h2>
-      <form className="register__form" onSubmit={handleSubmit}>
+      <form className="register__form" onSubmit={handleSubmit(onSubmit)}>
         <p className="register__name">Имя</p>
         <input
+          {...register("registrationName", {
+            required: "Введите имя",
+            minLength: {
+              value: 2,
+              message: "Минимум 2 символа",
+            },
+            maxLength: {
+              value: 30,
+              message: "Максимум 30 символа",
+            },
+          })}
           className="register__input"
-          value={name}
-          onChange={inputName}
-          name="name"
           type="text"
           placeholder="Name"
-          minLength="2"
-          maxLength="40"
-          required
         />
+        <span className="register__errors">
+          {errors?.registrationName?.message}
+        </span>
         <p className="register__name">E-mail</p>
         <input
+          {...register("registrationEmail", { required: "Введите e-mail" })}
           className="register__input"
-          value={email}
-          onChange={inputEmail}
-          name="email"
           type="text"
           placeholder="E-mail"
-          minLength="2"
-          maxLength="40"
-          required
         />
+        <span className="register__errors">
+          {errors?.registrationEmail && "Введите e-mail"}
+        </span>
         <p className="register__name">Пароль</p>
         <input
+          {...register("registrationPassword", {
+            required: "Введите password",
+          })}
           className="register__input"
-          value={password}
-          onChange={inputPassword}
-          name="password"
-          type="text"
+          type="password"
           placeholder="Password"
-          minLength="2"
-          maxLength="40"
-          required
         />
+        <span className="register__errors">
+          {errors?.registrationPassword && "Введите password"}
+        </span>
         <span className="register__error">{errorMessage}</span>
         <button className="register__signup" type="submit">
           Зарегистрироваться

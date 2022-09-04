@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   justify-content: flex-end;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s ease-in, visibility 0.3s ease-out;
@@ -23,8 +23,6 @@
   justify-content: center;
 
   width: 520px;
-  height: 100%;
-  min-height: 1024px;
 
   background-color: #fafafa;
 
@@ -59,8 +57,8 @@
 }
 
 .navigation__link:hover {
-  opacity: .7;
-  transition: opacity .2s linear;
+  opacity: 0.7;
+  transition: opacity 0.2s linear;
   cursor: pointer;
 }
 
@@ -91,12 +89,12 @@
   background-image: url(../../images/profile-button.svg);
   background-color: #fafafa;
 
-  margin: 593px 0 90px 0;
+  margin: calc(100vw * (593 / 1280)) 0 90px 0;
 }
 
 .navigation__profile-button:hover {
-  opacity: .7;
-  transition: opacity .2s linear;
+  opacity: 0.7;
+  transition: opacity 0.2s linear;
 }
 
 .navigation__close-button {
@@ -118,8 +116,8 @@
 }
 
 .navigation__close-button:hover {
-  opacity: .7;
-  transition: opacity .2s linear;
+  opacity: 0.7;
+  transition: opacity 0.2s linear;
   cursor: pointer;
 }
 
