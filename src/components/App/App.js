@@ -129,8 +129,22 @@ function App() {
     } else {
       setIsLoading(true);
       setRecivedMoives(JSON.parse(localStorage.getItem("recivedMoives")));
+      setCopySavedMoives(JSON.parse(localStorage.getItem("savedMovies")));
     }
   }, [token]);
+
+  useEffect(() => {
+    MainApi.getMovies(token)
+      .then((res) => {
+        const movie = Object.values(res).filter((item) => {
+          return item.owner === currentUser.user_id ? item : null;
+        });
+        localStorage.setItem("savedMovies", JSON.stringify(movie));
+        setSavedMoives(movie);
+        setCopySavedMoives(movie);
+      })
+      .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
+  }, [innerWidth, token, currentUser.user_id]);
 
   useEffect(() => {
     if (localStorage.getItem("lastFoundMovies")) {
@@ -192,6 +206,7 @@ function App() {
   function findMovies(value) {
     setValue(value);
     setIsToggleActiveMoives(false);
+    localStorage.removeItem("isMoviesToggleActive");
     if (windowMovies) {
       const movie = Object.values(
         JSON.parse(localStorage.getItem("recivedMoives"))
@@ -204,12 +219,15 @@ function App() {
       setCopyRecivedMoives(movie);
       localStorage.setItem("lastFoundMovies", JSON.stringify(movie));
     } else {
-      const movie = Object.values(savedMoives).filter((item) => {
+      const movie = Object.values(
+        JSON.parse(localStorage.getItem("savedMovies"))
+      ).filter((item) => {
         return item.nameRU.toLowerCase().includes(value.toLowerCase())
           ? item
           : null;
       });
       setSavedMoives(movie);
+      setCopySavedMoives(movie);
     }
   }
 
@@ -244,7 +262,7 @@ function App() {
       movie.nameRU,
       movie.nameEN,
       url + movie.image.url,
-      movie.id,
+      movie.id.toString(),
       token
     )
       .then((newMovie) => {
@@ -264,16 +282,6 @@ function App() {
       })
       .catch((err) => console.log(`Ошибка сохранения фильма: ${err}`));
   }
-
-  useEffect(() => {
-    MainApi.getMovies(token)
-      .then((res) => {
-        setSavedMoives(res);
-        const copy = Object.assign([], res);
-        setCopySavedMoives(copy);
-      })
-      .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
-  }, [innerWidth, token]);
 
   return (
     <div className="App">
