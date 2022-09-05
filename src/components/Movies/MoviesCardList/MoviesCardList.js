@@ -16,8 +16,6 @@ export default function MoviesCardList({
   isMainMoviesSection,
   savedMovies,
 }) {
-  console.log("recivedMoives:", recivedMoives)
-  console.log("savedMovies:", savedMovies)
   return isLoading ? (
     <>
       <section className="moviescardlist" aria-label="Фильмы">

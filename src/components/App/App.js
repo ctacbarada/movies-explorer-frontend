@@ -256,7 +256,6 @@ function App() {
   }
 
   function handleUnSaveMovie(savedMoive) {
-    console.log("savedMoive:", savedMoive);
     MainApi.deleteMovie(savedMoive._id, token)
       .then(() => {
         setSavedMoives((state) =>
