@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "./Login.css";
 
-export default function Login({ handleLogin, errorMessage}) {
+export default function Login({ handleLogin, errorMessage }) {
   const {
     register,
     handleSubmit,
@@ -28,6 +28,10 @@ export default function Login({ handleLogin, errorMessage}) {
         <input
           {...register("loginEmail", {
             required: "Введите e-mail",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Email должен быть с @",
+            },
           })}
           className="login__input"
           type="text"

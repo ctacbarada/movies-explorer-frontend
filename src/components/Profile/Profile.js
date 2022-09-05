@@ -67,6 +67,10 @@ export default function Profile({
           <input
             {...register("profileEmail", {
               required: "Введите e-mail",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Email должен быть с @",
+              },
             })}
             className="profile__input"
             type="text"
@@ -74,7 +78,7 @@ export default function Profile({
           ></input>
         </div>
         <span className="profile__errors">
-          {errors?.profileEmail && "Введите e-mail"}
+          {errors?.profileEmail?.message}
         </span>
         <span className="profile__confirm-message">
           {confirmMessage ? "Данные обновлены" : ""}

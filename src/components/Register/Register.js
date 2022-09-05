@@ -50,13 +50,19 @@ export default function Register({ handleRegister, errorMessage }) {
         </span>
         <p className="register__name">E-mail</p>
         <input
-          {...register("registrationEmail", { required: "Введите e-mail" })}
+          {...register("registrationEmail", {
+            required: "Введите e-mail",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Email должен быть с @",
+            },
+          })}
           className="register__input"
           type="text"
           placeholder="E-mail"
         />
         <span className="register__errors">
-          {errors?.registrationEmail && "Введите e-mail"}
+          {errors?.registrationEmail?.message}
         </span>
         <p className="register__name">Пароль</p>
         <input
