@@ -164,8 +164,6 @@ function App() {
     }
   }
 
-  console.log("copyRecivedMoives:", copyRecivedMoives);
-
   useEffect(() => {
     if (windowMovies) {
       if (isToggleActiveMoives) {
