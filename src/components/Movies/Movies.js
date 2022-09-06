@@ -18,7 +18,6 @@ export default function Movies({
   activateToggle,
   isToggleActiveMoives,
 }) {
-
   return (
     <>
       <SearchForm

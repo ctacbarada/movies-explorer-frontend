@@ -26,12 +26,16 @@ export default function SearchForm({
     },
   });
   const [isToggleActive, setIsToggleActive] = useState(false);
-  const inputFindMovieValue = watch("inputFindMovie");
+  const inputFindMovieValue = watch(
+    windowMovies ? "inputFindMovie" : "inputFindSavedMovie"
+  );
 
   function onSubmit() {
     findMovies(inputFindMovieValue);
-    setIsToggleActive(false);
-    localStorage.setItem("valueMovies", inputFindMovieValue);
+    // windowMovies ? setIsToggleActive(true) : setIsToggleActive(false);
+    windowMovies
+      ? localStorage.setItem("valueMovies", inputFindMovieValue)
+      : localStorage.setItem("valueSavedMovies", inputFindMovieValue);
   }
 
   return (
@@ -43,9 +47,12 @@ export default function SearchForm({
       >
         <div className="searchform__icon"></div>
         <input
-          {...register("inputFindMovie", {
-            required: "Нужно ввести ключевое слово",
-          })}
+          {...register(
+            windowMovies ? "inputFindMovie" : "inputFindSavedMovie",
+            {
+              required: "Нужно ввести ключевое слово",
+            }
+          )}
           className="searchform__input"
           type="text"
           placeholder="Фильм"
@@ -65,7 +72,7 @@ export default function SearchForm({
           aria-label="Короткометражки"
           onClick={() => {
             setIsToggleActive(!isToggleActive);
-            activateToggle(isToggleActive);
+            activateToggle(!isToggleActive);
           }}
         />
         <p className="searchform__toggle-name">Короткометражки</p>

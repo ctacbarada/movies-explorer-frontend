@@ -25,6 +25,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [confirmMessage, setConfirmMessage] = useState(false);
+  const [isResetSavedMovies, setIsResetSavedMovies] = useState(false);
 
   const [recivedMoives, setRecivedMoives] = useState([]);
   const [copyRecivedMoives, setCopyRecivedMoives] = useState([]);
@@ -115,25 +116,37 @@ function App() {
   }
 
   useEffect(() => {
-    checkToken();
-  }, []);
-
-  useEffect(() => {
     if (!localStorage.getItem("recivedMoives")) {
-      MoviesApi.getMovies(token)
+      MoviesApi.getMovies()
         .then((res) => {
           setIsLoading(true);
           localStorage.setItem("recivedMoives", JSON.stringify(res));
+          localStorage.setItem("lastFoundMovies", JSON.stringify(res));
         })
         .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
     } else {
       setIsLoading(true);
-      setRecivedMoives(JSON.parse(localStorage.getItem("recivedMoives")));
-      setCopySavedMoives(JSON.parse(localStorage.getItem("savedMovies")));
+      localStorage.getItem("valueMovies")
+        ? setRecivedMoives(JSON.parse(localStorage.getItem("lastFoundMovies")))
+        : setRecivedMoives(JSON.parse(localStorage.getItem("recivedMoives")));
     }
   }, [token]);
 
+  function onClickHeaderMovies() {
+    if (localStorage.getItem("isMoviesToggleActive")) {
+      setIsToggleActiveMoives(true);
+    } else {
+      setIsToggleActiveMoives(false);
+    }
+  }
+
+  const onClickHeaderSavedMovies = () => {
+    setIsToggleActiveMoives(false);
+    localStorage.removeItem("valueSavedMovies")
+  };
+
   useEffect(() => {
+    checkToken();
     MainApi.getMovies(token)
       .then((res) => {
         const movie = Object.values(res).filter((item) => {
@@ -144,7 +157,7 @@ function App() {
         setCopySavedMoives(movie);
       })
       .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
-  }, [innerWidth, token, currentUser.user_id]);
+  }, [token, windowMovies, currentUser.user_id]);
 
   useEffect(() => {
     if (localStorage.getItem("lastFoundMovies")) {
@@ -196,12 +209,13 @@ function App() {
           return item.duration < 40 ? item : null;
         });
         setSavedMoives(movie);
+        // setCopySavedMoives(movie)
       } else {
         setSavedMoives(copySavedMoives);
         setIsToggleActiveMoives(false);
       }
     }
-  }, [isToggleActiveMoives]);
+  }, [isToggleActiveMoives, windowMovies]);
 
   function findMovies(value) {
     setValue(value);
@@ -303,7 +317,10 @@ function App() {
             element={
               isUserLoggedIn ? (
                 <ProtectedRoute isUserLoggedIn={isUserLoggedIn}>
-                  <Header isUserLoggedIn={isUserLoggedIn} />
+                  <Header
+                    isUserLoggedIn={isUserLoggedIn}
+                    onClickHeaderSavedMovies={onClickHeaderSavedMovies}
+                  />
                   <Movies
                     handleSaveMovie={handleSaveMovie}
                     handleUnSaveMovie={handleUnSaveMovie}
@@ -331,7 +348,10 @@ function App() {
             path="/saved-movies"
             element={
               <>
-                <Header isUserLoggedIn={isUserLoggedIn} />
+                <Header
+                  isUserLoggedIn={isUserLoggedIn}
+                  onClickHeaderMovies={onClickHeaderMovies}
+                />
                 <SavedMovies
                   handleSaveMovie={handleSaveMovie}
                   handleUnSaveMovie={handleUnSaveMovie}

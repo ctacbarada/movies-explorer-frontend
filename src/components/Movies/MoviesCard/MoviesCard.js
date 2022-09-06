@@ -9,8 +9,6 @@ export default function MoviesCard({
   isMainMoviesSection,
   savedMovies,
 }) {
-  // console.log("movie:", movie)
-  // console.log("savedMovies:", savedMovies)
   const currentUser = useContext(CurrentUserContext)
   const [isSaved, setIsSaved] = useState(false);
   const [savedMovie, setSavedMovie] = useState([]);

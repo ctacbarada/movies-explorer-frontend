@@ -3,7 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
 import Navigation from "../Navigation/Navigation";
 
-function Header({ isUserLoggedIn, setMainMovies}) {
+function Header({
+  isUserLoggedIn,
+  setMainMovies,
+  onClickHeaderMovies,
+  onClickHeaderSavedMovies,
+}) {
   const [isNavigation, setIsNavigation] = useState(false);
 
   const handleOpenNavigationMenu = () => {
@@ -37,6 +42,7 @@ function Header({ isUserLoggedIn, setMainMovies}) {
               }
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
+              onClick={onClickHeaderMovies}
             >
               Фильмы
             </NavLink>
@@ -52,6 +58,7 @@ function Header({ isUserLoggedIn, setMainMovies}) {
               }
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
+              onClick={onClickHeaderSavedMovies}
             >
               Сохранённые фильмы
             </NavLink>
