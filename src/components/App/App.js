@@ -56,7 +56,7 @@ function App() {
         })
         .catch((err) => console.log(`Ошибка токена: ${err}`));
     } else {
-      history("/signin");
+      history("/");
     }
   }
 
@@ -109,6 +109,7 @@ function App() {
   function handleSignOut() {
     setIsUserLoggedIn(false);
     localStorage.clear();
+    window.location.reload();
   }
 
   useEffect(() => {
