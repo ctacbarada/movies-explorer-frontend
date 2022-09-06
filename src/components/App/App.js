@@ -57,10 +57,13 @@ function App() {
         .then((res) => {
           if (res) {
             setCurrentUser(res);
+            console.log(currentUser)
             setIsUserLoggedIn(true);
           }
         })
         .catch((err) => console.log(`Ошибка токена: ${err}`));
+    } else {
+      history("/signin");
     }
   }
 
