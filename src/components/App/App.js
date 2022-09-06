@@ -25,21 +25,15 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [confirmMessage, setConfirmMessage] = useState(false);
-  const [isResetSavedMovies, setIsResetSavedMovies] = useState(false);
 
   const [recivedMoives, setRecivedMoives] = useState([]);
-  const [copyRecivedMoives, setCopyRecivedMoives] = useState([]);
   const [savedMoives, setSavedMoives] = useState([]);
   const [copySavedMoives, setCopySavedMoives] = useState([]);
   const [isToggleActiveMoives, setIsToggleActiveMoives] = useState(false);
-  const [value, setValue] = useState("");
 
   const windowMovies =
     window.location.href === "http://stan.nomoredomains.xyz/movies" ||
     window.location.href === "http://localhost:3000/movies";
-  const windowSavedMovies =
-    window.location.href === "http://stan.nomoredomains.xyz/saved-movies" ||
-    window.location.href === "http://localhost:3000/saved-movies";
 
   const [isLoading, setIsLoading] = useState(false);
   const [counter, setCounter] = useState(12);
@@ -57,7 +51,6 @@ function App() {
         .then((res) => {
           if (res) {
             setCurrentUser(res);
-            console.log(currentUser)
             setIsUserLoggedIn(true);
           }
         })
@@ -145,11 +138,16 @@ function App() {
 
   const onClickHeaderSavedMovies = () => {
     setIsToggleActiveMoives(false);
-    localStorage.removeItem("valueSavedMovies")
+    localStorage.removeItem("valueSavedMovies");
   };
 
   useEffect(() => {
     checkToken();
+
+    localStorage.setItem("profileName", currentUser.name);
+    localStorage.setItem("profileEmail", currentUser.email);
+
+
     MainApi.getMovies(token)
       .then((res) => {
         const movie = Object.values(res).filter((item) => {
@@ -190,7 +188,11 @@ function App() {
       setIsToggleActiveMoives(true);
     } else {
       setIsToggleActiveMoives(false);
-      localStorage.removeItem("isMoviesToggleActive");
+      if (windowMovies) {
+        localStorage.removeItem("isMoviesToggleActive");
+      } else {
+        return;
+      }
     }
   }
 
@@ -212,7 +214,6 @@ function App() {
           return item.duration < 40 ? item : null;
         });
         setSavedMoives(movie);
-        // setCopySavedMoives(movie)
       } else {
         setSavedMoives(copySavedMoives);
         setIsToggleActiveMoives(false);
@@ -221,7 +222,6 @@ function App() {
   }, [isToggleActiveMoives, windowMovies]);
 
   function findMovies(value) {
-    setValue(value);
     setIsToggleActiveMoives(false);
     localStorage.removeItem("isMoviesToggleActive");
     if (windowMovies) {
@@ -233,7 +233,6 @@ function App() {
           : null;
       });
       setRecivedMoives(movie);
-      setCopyRecivedMoives(movie);
       localStorage.setItem("lastFoundMovies", JSON.stringify(movie));
     } else {
       const movie = Object.values(

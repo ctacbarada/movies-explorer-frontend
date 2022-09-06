@@ -1,6 +1,6 @@
+import "./MoviesCard.css";
 import React, { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from '../../../utils/CurrentUserContext'
-import "./MoviesCard.css";
 
 export default function MoviesCard({
   movie,
@@ -61,7 +61,7 @@ export default function MoviesCard({
         </a>
 
         {isSaved ? (
-          <button className="moviescard__saved" onClick={unSaveMovie} />
+          <button className={isMainMoviesSection ? "moviescard__saved" : "moviescard__remove"} onClick={unSaveMovie} />
         ) : (
           <button className="moviescard__save" onClick={saveMovie} />
         )}

@@ -12,7 +12,6 @@ export default function Profile({
   errorMessage,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-
   const {
     register,
     handleSubmit,
@@ -21,19 +20,52 @@ export default function Profile({
   } = useForm({
     mode: "onBlur",
     defaultValues: {
-      profileName: currentUser.name,
-      profileEmail: currentUser.email,
+      profileName: localStorage.getItem("profileName"),
+      profileEmail: localStorage.getItem("profileEmail"),
     },
   });
 
   const [profileName, profileEmail] = watch(["profileName", "profileEmail"]);
 
+  function checkValidity() {
+    if (
+      profileName === localStorage.getItem("profileName") &&
+      profileEmail === localStorage.getItem("profileEmail")
+    ) {
+      return (
+        <button className="profile__edit-button" type="submit" disabled>
+          Редактировать
+        </button>
+      );
+    } else {
+      return (
+        <button className="profile__edit-button" type="submit">
+          Редактировать
+        </button>
+      );
+    }
+  }
+
+  function hideError() {
+    document.getElementsByClassName(
+      "profile__confirm-message"
+    )[0].style.display = "none";
+  }
+
+  function resetError() {
+    document.getElementsByClassName(
+      "profile__confirm-message"
+    )[0].style.display = "block";
+  }
+
   useEffect(() => {
     onUpdateUseState();
+    resetError();
   }, [profileName, profileEmail]);
 
   function onSubmit() {
     onUpdateUser(profileName, profileEmail);
+    setTimeout(hideError, 3000);
   }
 
   return (
@@ -59,9 +91,7 @@ export default function Profile({
             placeholder="Имя"
           />
         </div>
-        <span className="profile__errors">
-          {errors?.profileName && "Введите имя"}
-        </span>
+        <span className="profile__errors">{errors?.profileName?.message}</span>
         <div className="profile__string">
           <p className="profile__string-name">E-mail</p>
           <input
@@ -77,16 +107,12 @@ export default function Profile({
             placeholder="E-mail"
           ></input>
         </div>
-        <span className="profile__errors">
-          {errors?.profileEmail?.message}
-        </span>
+        <span className="profile__errors">{errors?.profileEmail?.message}</span>
         <span className="profile__confirm-message">
           {confirmMessage ? "Данные обновлены" : ""}
           {errorMessage ? errorMessage : ""}
         </span>
-        <button className="profile__edit-button" type="submit">
-          Редактировать
-        </button>
+        {checkValidity()}
         <Link to="/" className="profile__logout" onClick={handleSignOut}>
           Выйти из аккаунта
         </Link>
