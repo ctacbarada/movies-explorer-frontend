@@ -1,9 +1,10 @@
 .footer {
+  width: calc(100vw * (1140 / 1280));
   max-width: 1280px;
   padding-top: 60px;
   padding-bottom: 20px;
 
-  margin-top: auto;
+  margin: auto auto 0;
 }
 
 .footer__title {
