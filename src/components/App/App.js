@@ -54,7 +54,10 @@ function App() {
             setIsUserLoggedIn(true);
           }
         })
-        .catch((err) => console.log(`Ошибка токена: ${err}`));
+        .catch((err) => {
+          console.log(`Ошибка токена: ${err}`);
+          handleSignOut()
+        });
     } else {
       history("/");
     }
@@ -147,7 +150,6 @@ function App() {
 
     localStorage.setItem("profileName", currentUser.name);
     localStorage.setItem("profileEmail", currentUser.email);
-
 
     MainApi.getMovies(token)
       .then((res) => {
@@ -268,6 +270,7 @@ function App() {
   }
 
   function handleSaveMovie(movie) {
+    checkToken()
     MainApi.saveMovie(
       movie.country,
       movie.director,
@@ -289,6 +292,7 @@ function App() {
   }
 
   function handleUnSaveMovie(savedMoive) {
+    checkToken()
     MainApi.deleteMovie(savedMoive._id, token)
       .then(() => {
         setSavedMoives((state) =>
