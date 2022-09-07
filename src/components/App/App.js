@@ -102,15 +102,19 @@ function App() {
   }
 
   function handleUpdateUser(name, email) {
-    MainApi.setUserInfo(name, email, token)
-      .then((res) => {
-        setCurrentUser(res);
-        setConfirmMessage(true);
-      })
-      .catch((error) => {
-        console.log(`Ошибка редактирования профиля: ${error}`);
-        setErrorMessage("Пользователь с такой почтой уже существует");
-      });
+    if (token !== localStorage.getItem("jwt")) {
+      throw new TrowUnauthorizedError("Ошибка токена");
+    } else {
+      MainApi.setUserInfo(name, email, token)
+        .then((res) => {
+          setCurrentUser(res);
+          setConfirmMessage(true);
+        })
+        .catch((error) => {
+          console.log(`Ошибка редактирования профиля: ${error}`);
+          setErrorMessage("Пользователь с такой почтой уже существует");
+        });
+    }
   }
 
   function handleSignOut() {
