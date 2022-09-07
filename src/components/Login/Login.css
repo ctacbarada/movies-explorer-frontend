@@ -136,6 +136,14 @@
   color: #ee3465;
 }
 
+.login__error {
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+
+  margin: 0;
+}
+
 @media screen and (max-width: 768px) {
   .login {
     padding: 232px 0;

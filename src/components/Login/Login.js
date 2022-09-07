@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "./Login.css";
 
-export default function Login({ handleLogin, errorMessage }) {
+export default function Login({ handleLogin, errorMessageLog }) {
   const {
     register,
     handleSubmit,
@@ -50,7 +50,7 @@ export default function Login({ handleLogin, errorMessage }) {
         <span className="login__errors">
           {errors?.loginPassword && "Введите password"}
         </span>
-        <span className="register__error">{errorMessage}</span>
+        <span className="login__error">{errorMessageLog}</span>
         <button className="login__signup" type="submit">
           Войти
         </button>

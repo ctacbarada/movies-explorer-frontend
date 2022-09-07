@@ -1,6 +1,6 @@
 import "./MoviesCard.css";
 import React, { useContext, useEffect, useState } from "react";
-import { CurrentUserContext } from '../../../utils/CurrentUserContext'
+import { CurrentUserContext } from "../../../utils/CurrentUserContext";
 
 export default function MoviesCard({
   movie,
@@ -9,7 +9,7 @@ export default function MoviesCard({
   isMainMoviesSection,
   savedMovies,
 }) {
-  const currentUser = useContext(CurrentUserContext)
+  const currentUser = useContext(CurrentUserContext);
   const [isSaved, setIsSaved] = useState(false);
   const [savedMovie, setSavedMovie] = useState([]);
   const url = "https://api.nomoreparties.co/";
@@ -61,7 +61,12 @@ export default function MoviesCard({
         </a>
 
         {isSaved ? (
-          <button className={isMainMoviesSection ? "moviescard__saved" : "moviescard__remove"} onClick={unSaveMovie} />
+          <button
+            className={
+              isMainMoviesSection ? "moviescard__saved" : "moviescard__remove"
+            }
+            onClick={unSaveMovie}
+          />
         ) : (
           <button className="moviescard__save" onClick={saveMovie} />
         )}

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "./Register.css";
 
-export default function Register({ handleRegister, errorMessage }) {
+export default function Register({ handleRegister, errorMessageReg }) {
   const {
     register,
     handleSubmit,
@@ -76,7 +76,7 @@ export default function Register({ handleRegister, errorMessage }) {
         <span className="register__errors">
           {errors?.registrationPassword && "Введите password"}
         </span>
-        <span className="register__error">{errorMessage}</span>
+        <span className="register__error">{errorMessageReg}</span>
         <button className="register__signup" type="submit">
           Зарегистрироваться
         </button>

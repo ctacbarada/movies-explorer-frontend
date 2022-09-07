@@ -10,7 +10,7 @@ export default function Movies({
   isLoading,
   counter,
   moreMovies,
-  buttonMore,
+  loadMoreMovies,
   isSavedMoviesSection,
   isMainMoviesSection,
   savedMovies,
@@ -34,7 +34,7 @@ export default function Movies({
           isLoading={isLoading}
           counter={counter}
           moreMovies={moreMovies}
-          buttonMore={buttonMore}
+          loadMoreMovies={loadMoreMovies}
           isSavedMoviesSection={isSavedMoviesSection}
           isMainMoviesSection={isMainMoviesSection}
           savedMovies={savedMovies}

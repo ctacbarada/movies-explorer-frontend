@@ -11,18 +11,19 @@ export default function MoviesCardList({
   isLoading,
   counter,
   moreMovies,
-  buttonMore,
-  isSavedMoviesSection,
+  loadMoreMovies,
   isMainMoviesSection,
   savedMovies,
 }) {
+  const windowMovies = window.location.pathname === "/movies";
+  console.log("counterFROMFUCNTION:", counter)
   return isLoading ? (
     <>
       <section className="moviescardlist" aria-label="Фильмы">
         {recivedMoives.slice(0, counter).map((movie, i) => (
           <MoviesCard
             movie={movie}
-            key={isSavedMoviesSection ? i : movie.id}
+            key={windowMovies ? movie.id : movie._id}
             handleSaveMovie={handleSaveMovie}
             handleUnSaveMovie={handleUnSaveMovie}
             isMainMoviesSection={isMainMoviesSection}
@@ -30,7 +31,7 @@ export default function MoviesCardList({
           />
         ))}
       </section>
-      {moreMovies ? <MoreMovies onClick={buttonMore} /> : null}
+      {moreMovies ? <MoreMovies loadMoreMovies={loadMoreMovies} /> : null}
     </>
   ) : (
     <Preloader />

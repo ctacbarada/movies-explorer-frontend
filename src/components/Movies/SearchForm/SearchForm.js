@@ -8,12 +8,7 @@ export default function SearchForm({
   isToggleActiveMoives,
   recivedMoives,
 }) {
-  const windowMovies =
-    window.location.href === "http://stan.nomoredomains.xyz/movies" ||
-    window.location.href === "http://localhost:3000/movies";
-  const windowSavedMovies =
-    window.location.href === "http://stan.nomoredomains.xyz/saved-movies" ||
-    window.location.href === "http://localhost:3000/saved-movies";
+  const windowMovies = window.location.pathname === "/movies";
   const {
     register,
     handleSubmit,
@@ -77,9 +72,13 @@ export default function SearchForm({
         />
         <p className="searchform__toggle-name">Короткометражки</p>
       </form>
-      {errors?.inputFindMovie && (
-        <p className="searchform__errors">Нужно ввести ключевое слово</p>
-      )}
+      {windowMovies
+        ? errors?.inputFindMovie && (
+            <p className="searchform__errors">Нужно ввести ключевое слово</p>
+          )
+        : errors?.inputFindSavedMovie && (
+            <p className="searchform__errors">Нужно ввести ключевое слово</p>
+          )}
       {recivedMoives.length === 0 && (
         <p className="searchform__errors">Ничего не найдено</p>
       )}

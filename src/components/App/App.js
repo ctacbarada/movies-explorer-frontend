@@ -24,6 +24,8 @@ function App() {
   const [moreMovies, setMoreMovies] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessageReg, setErrorMessageReg] = useState("");
+  const [errorMessageLog, setErrorMessageLog] = useState("");
   const [confirmMessage, setConfirmMessage] = useState(false);
 
   const [recivedMoives, setRecivedMoives] = useState([]);
@@ -31,9 +33,9 @@ function App() {
   const [copySavedMoives, setCopySavedMoives] = useState([]);
   const [isToggleActiveMoives, setIsToggleActiveMoives] = useState(false);
 
-  const windowMovies =
-    window.location.href === "http://stan.nomoredomains.xyz/movies" ||
-    window.location.href === "http://localhost:3000/movies";
+  const windowMovies = window.location.pathname === "/movies";
+  const windowReg = window.location.pathname === "/signin";
+  const windowLog = window.location.pathname === "/signup";
 
   const [isLoading, setIsLoading] = useState(false);
   const [counter, setCounter] = useState(12);
@@ -56,10 +58,8 @@ function App() {
         })
         .catch((err) => {
           console.log(`Ошибка токена: ${err}`);
-          handleSignOut()
+          handleSignOut();
         });
-    } else {
-      history("/");
     }
   }
 
@@ -72,7 +72,7 @@ function App() {
       })
       .catch((error) => {
         console.log("Ошибка регистрации:");
-        setErrorMessage(error.message);
+        setErrorMessageReg(error.message);
       });
   }
 
@@ -88,7 +88,7 @@ function App() {
       })
       .catch((error) => {
         console.log("Ошибка авторизации:");
-        setErrorMessage(error.message);
+        setErrorMessageLog(error.message);
       });
   }
 
@@ -148,6 +148,19 @@ function App() {
   useEffect(() => {
     checkToken();
 
+    if (localStorage.getItem("lastFoundMovies")) {
+      if (localStorage.getItem("isMoviesToggleActive") && windowMovies) {
+        setIsToggleActiveMoives(true);
+        setRecivedMoives(
+          JSON.parse(localStorage.getItem("isMoviesToggleActive"))
+        );
+      } else {
+        setRecivedMoives(JSON.parse(localStorage.getItem("lastFoundMovies")));
+      }
+    } else {
+      return;
+    }
+
     localStorage.setItem("profileName", currentUser.name);
     localStorage.setItem("profileEmail", currentUser.email);
 
@@ -164,19 +177,6 @@ function App() {
   }, [token, windowMovies, currentUser.user_id]);
 
   useEffect(() => {
-    if (localStorage.getItem("lastFoundMovies")) {
-      if (localStorage.getItem("isMoviesToggleActive")) {
-        setIsToggleActiveMoives(true);
-        setRecivedMoives(
-          JSON.parse(localStorage.getItem("isMoviesToggleActive"))
-        );
-      } else {
-        setRecivedMoives(JSON.parse(localStorage.getItem("lastFoundMovies")));
-      }
-    } else {
-      return;
-    }
-
     if (innerWidth > 769) {
       setCounter(12);
     } else if (innerWidth > 321) {
@@ -225,32 +225,66 @@ function App() {
   }, [isToggleActiveMoives, windowMovies]);
 
   function findMovies(value) {
-    setIsToggleActiveMoives(false);
-    localStorage.removeItem("isMoviesToggleActive");
     if (windowMovies) {
-      const movie = Object.values(
-        JSON.parse(localStorage.getItem("recivedMoives"))
-      ).filter((item) => {
-        return item.nameRU.toLowerCase().includes(value.toLowerCase())
-          ? item
-          : null;
-      });
-      setRecivedMoives(movie);
-      localStorage.setItem("lastFoundMovies", JSON.stringify(movie));
+      if (!!localStorage.getItem("isMoviesToggleActive")) {
+        setIsToggleActiveMoives(true);
+        const movie = Object.values(
+          JSON.parse(localStorage.getItem("recivedMoives"))
+        ).filter((item) => {
+          return item.nameRU.toLowerCase().includes(value.toLowerCase())
+            ? item
+            : null;
+        });
+        const shortMovie = Object.values(movie).filter((item) => {
+          return item.duration < 40 ? item : null;
+        });
+        setRecivedMoives(shortMovie);
+        localStorage.setItem(
+          "isMoviesToggleActive",
+          JSON.stringify(shortMovie)
+        );
+        localStorage.setItem("lastFoundMovies", JSON.stringify(movie));
+      } else {
+        const movie = Object.values(
+          JSON.parse(localStorage.getItem("recivedMoives"))
+        ).filter((item) => {
+          return item.nameRU.toLowerCase().includes(value.toLowerCase())
+            ? item
+            : null;
+        });
+        setRecivedMoives(movie);
+        localStorage.setItem("lastFoundMovies", JSON.stringify(movie));
+      }
     } else {
-      const movie = Object.values(
-        JSON.parse(localStorage.getItem("savedMovies"))
-      ).filter((item) => {
-        return item.nameRU.toLowerCase().includes(value.toLowerCase())
-          ? item
-          : null;
-      });
-      setSavedMoives(movie);
-      setCopySavedMoives(movie);
+      if (isToggleActiveMoives) {
+        const movie = Object.values(
+          JSON.parse(localStorage.getItem("savedMovies"))
+        ).filter((item) => {
+          return item.nameRU.toLowerCase().includes(value.toLowerCase())
+            ? item
+            : null;
+        });
+        const shortMovie = Object.values(movie).filter((item) => {
+          return item.duration < 40 ? item : null;
+        });
+        setSavedMoives(shortMovie);
+        setCopySavedMoives(movie);
+      } else {
+        const movie = Object.values(
+          JSON.parse(localStorage.getItem("savedMovies"))
+        ).filter((item) => {
+          return item.nameRU.toLowerCase().includes(value.toLowerCase())
+            ? item
+            : null;
+        });
+        setSavedMoives(movie);
+        setCopySavedMoives(movie);
+      }
     }
   }
 
-  function buttonMore() {
+  function loadMoreMovies() {
+    console.log("counterFROMFUCNTION:", counter)
     if (window.innerWidth >= 1140) {
       setCounter(counter + 3);
       if (counter >= recivedMoives.length) {
@@ -270,7 +304,7 @@ function App() {
   }
 
   function handleSaveMovie(movie) {
-    checkToken()
+    checkToken();
     MainApi.saveMovie(
       movie.country,
       movie.director,
@@ -288,11 +322,11 @@ function App() {
       .then((newMovie) => {
         setSavedMoives([newMovie, ...savedMoives]);
       })
-      .catch((err) => console.log(`Ошибка удаления фильма: ${err}`));
+      .catch((err) => console.log(`Ошибка сохранения фильма: ${err}`));
   }
 
   function handleUnSaveMovie(savedMoive) {
-    checkToken()
+    checkToken();
     MainApi.deleteMovie(savedMoive._id, token)
       .then(() => {
         setSavedMoives((state) =>
@@ -301,8 +335,13 @@ function App() {
           })
         );
       })
-      .catch((err) => console.log(`Ошибка сохранения фильма: ${err}`));
+      .catch((err) => console.log(`Ошибка удаления фильма: ${err}`));
   }
+
+  useEffect(() => {
+    setErrorMessageReg("");
+    setErrorMessageLog("");
+  }, [windowReg, windowLog]);
 
   return (
     <div className="App">
@@ -320,41 +359,36 @@ function App() {
             }
           />
           <Route
-            path="/movies"
+            path="/movies/*"
             element={
-              isUserLoggedIn ? (
-                <ProtectedRoute isUserLoggedIn={isUserLoggedIn}>
-                  <Header
-                    isUserLoggedIn={isUserLoggedIn}
-                    onClickHeaderSavedMovies={onClickHeaderSavedMovies}
-                  />
-                  <Movies
-                    handleSaveMovie={handleSaveMovie}
-                    handleUnSaveMovie={handleUnSaveMovie}
-                    recivedMoives={recivedMoives}
-                    isLoading={isLoading}
-                    counter={counter}
-                    moreMovies={moreMovies}
-                    buttonMore={buttonMore}
-                    isSavedMoviesSection={isSavedMoviesSection}
-                    isMainMoviesSection={isMainMoviesSection}
-                    savedMovies={savedMoives}
-                    findMovies={findMovies}
-                    activateToggle={activateToggle}
-                    isToggleActiveMoives={isToggleActiveMoives}
-                  />
-                  <Footer />
-                </ProtectedRoute>
-              ) : (
-                <Preloader />
-              )
+              <ProtectedRoute isUserLoggedIn={isUserLoggedIn} path="">
+                <Header
+                  isUserLoggedIn={isUserLoggedIn}
+                  onClickHeaderSavedMovies={onClickHeaderSavedMovies}
+                />
+                <Movies
+                  handleSaveMovie={handleSaveMovie}
+                  handleUnSaveMovie={handleUnSaveMovie}
+                  recivedMoives={recivedMoives}
+                  isLoading={isLoading}
+                  counter={counter}
+                  moreMovies={moreMovies}
+                  loadMoreMovies={loadMoreMovies}
+                  isSavedMoviesSection={isSavedMoviesSection}
+                  isMainMoviesSection={isMainMoviesSection}
+                  savedMovies={savedMoives}
+                  findMovies={findMovies}
+                  activateToggle={activateToggle}
+                  isToggleActiveMoives={isToggleActiveMoives}
+                />
+                <Footer />
+              </ProtectedRoute>
             }
           />
-
           <Route
-            path="/saved-movies"
+            path="/saved-movies/*"
             element={
-              <>
+              <ProtectedRoute isUserLoggedIn={isUserLoggedIn} path="">
                 <Header
                   isUserLoggedIn={isUserLoggedIn}
                   onClickHeaderMovies={onClickHeaderMovies}
@@ -365,7 +399,6 @@ function App() {
                   recivedMoives={savedMoives}
                   isLoading={isLoading}
                   counter={counter}
-                  buttonMore={buttonMore}
                   isSavedMoviesSection={isSavedMoviesSection}
                   savedMovies={savedMoives}
                   findMovies={findMovies}
@@ -373,14 +406,14 @@ function App() {
                   isToggleActiveMoives={isToggleActiveMoives}
                 />
                 <Footer />
-              </>
+              </ProtectedRoute>
             }
           />
 
           <Route
-            path="/profile"
+            path="/profile/*"
             element={
-              <>
+              <ProtectedRoute isUserLoggedIn={isUserLoggedIn} path="">
                 <Header isUserLoggedIn={isUserLoggedIn} />
                 <Profile
                   onUpdateUser={handleUpdateUser}
@@ -389,7 +422,7 @@ function App() {
                   onUpdateUseState={onUpdateUseState}
                   errorMessage={errorMessage}
                 />
-              </>
+              </ProtectedRoute>
             }
           />
           <Route
@@ -398,7 +431,10 @@ function App() {
               isUserLoggedIn ? (
                 <Navigate to="/movies" />
               ) : (
-                <Login handleLogin={handleLogin} errorMessage={errorMessage} />
+                <Login
+                  handleLogin={handleLogin}
+                  errorMessageLog={errorMessageLog}
+                />
               )
             }
           />
@@ -411,7 +447,7 @@ function App() {
               ) : (
                 <Register
                   handleRegister={handleRegister}
-                  errorMessage={errorMessage}
+                  errorMessageReg={errorMessageReg}
                 />
               )
             }
