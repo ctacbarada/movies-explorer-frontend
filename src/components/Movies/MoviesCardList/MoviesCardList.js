@@ -41,8 +41,6 @@ export default function MoviesCardList({
   }, [recivedMoives, counter]);
 
   function loadMoreMovies() {
-    console.log("loadMoreMovies.length:", recivedMoives.length);
-    console.log("loadMoreMovies:", counter);
     if (innerWidth > 768) {
       if (recivedMoives.length > counter) {
         setCounter(counter + 3);

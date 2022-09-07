@@ -27,7 +27,7 @@ export default function Movies({
         isToggleActiveMoives={isToggleActiveMoives}
         recivedMoives={recivedMoives}
       />
-      {recivedMoives.length === 0 ? null : (
+      {recivedMoives ? recivedMoives.length === 0 ? null : (
         <MoviesCardList
           handleSaveMovie={handleSaveMovie}
           handleUnSaveMovie={handleUnSaveMovie}
@@ -41,7 +41,7 @@ export default function Movies({
           savedMovies={savedMovies}
           value={value}
         />
-      )}
+      ) : null}
     </>
   );
 }

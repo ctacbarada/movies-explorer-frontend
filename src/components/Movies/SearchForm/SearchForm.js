@@ -79,9 +79,11 @@ export default function SearchForm({
         : errors?.inputFindSavedMovie && (
             <p className="searchform__errors">Нужно ввести ключевое слово</p>
           )}
-      {recivedMoives.length === 0 && (
-        <p className="searchform__errors">Ничего не найдено</p>
-      )}
+      {recivedMoives
+        ? recivedMoives.length === 0 && (
+            <p className="searchform__errors">Ничего не найдено</p>
+          )
+        : null}
     </section>
   );
 }

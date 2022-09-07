@@ -15,6 +15,7 @@ import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
 import * as Auth from "../../utils/Api/Auth";
 import { MainApi } from "../../utils/Api/MainApi";
 import { MoviesApi } from "../../utils/Api/MoviesApi";
+import { TrowUnauthorizedError } from "../../Errors/TrowUnauthorizedError";
 
 function App() {
   const [isSavedMoviesSection, setIsSavedMoviesSection] = useState(true);
@@ -25,7 +26,7 @@ function App() {
   const [errorMessageReg, setErrorMessageReg] = useState("");
   const [errorMessageLog, setErrorMessageLog] = useState("");
   const [confirmMessage, setConfirmMessage] = useState(false);
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState("");
 
   const [recivedMoives, setRecivedMoives] = useState([]);
   const [savedMoives, setSavedMoives] = useState([]);
@@ -41,6 +42,12 @@ function App() {
   const [token, setToken] = useState("");
   const history = useNavigate();
   const url = "https://api.nomoreparties.co";
+
+  // function checkTokenValidity() {
+  //   if (token !== localStorage.getItem("jwt")) {
+  //     handleSignOut()
+  //   }
+  // }
 
   function checkToken() {
     if (localStorage.getItem("jwt")) {
@@ -212,7 +219,7 @@ function App() {
   }, [isToggleActiveMoives, windowMovies]);
 
   function findMovies(value) {
-    setValue(value)
+    setValue(value);
     if (windowMovies) {
       if (!!localStorage.getItem("isMoviesToggleActive")) {
         setIsToggleActiveMoives(true);
@@ -272,36 +279,44 @@ function App() {
   }
 
   function handleSaveMovie(movie) {
-    MainApi.saveMovie(
-      movie.country,
-      movie.director,
-      movie.duration,
-      movie.year,
-      movie.description,
-      url + movie.image.url,
-      movie.trailerLink,
-      movie.nameRU,
-      movie.nameEN,
-      url + movie.image.url,
-      movie.id.toString(),
-      token
-    )
-      .then((newMovie) => {
-        setSavedMoives([newMovie, ...savedMoives]);
-      })
-      .catch((err) => console.log(`Ошибка сохранения фильма: ${err}`));
+    if (token !== localStorage.getItem("jwt")) {
+      throw new TrowUnauthorizedError("Ошибка токена");
+    } else {
+      MainApi.saveMovie(
+        movie.country,
+        movie.director,
+        movie.duration,
+        movie.year,
+        movie.description,
+        url + movie.image.url,
+        movie.trailerLink,
+        movie.nameRU,
+        movie.nameEN,
+        url + movie.image.url,
+        movie.id.toString(),
+        token
+      )
+        .then((newMovie) => {
+          setSavedMoives([newMovie, ...savedMoives]);
+        })
+        .catch((err) => console.log(`Ошибка сохранения фильма: ${err}`));
+    }
   }
 
   function handleUnSaveMovie(savedMoive) {
-    MainApi.deleteMovie(savedMoive._id, token)
-      .then(() => {
-        setSavedMoives((state) =>
-          state.filter((item) => {
-            return item._id !== savedMoive._id;
-          })
-        );
-      })
-      .catch((err) => console.log(`Ошибка удаления фильма: ${err}`));
+    if (token !== localStorage.getItem("jwt")) {
+      throw new TrowUnauthorizedError("Ошибка токена");
+    } else {
+      MainApi.deleteMovie(savedMoive._id, token)
+        .then(() => {
+          setSavedMoives((state) =>
+            state.filter((item) => {
+              return item._id !== savedMoive._id;
+            })
+          );
+        })
+        .catch((err) => console.log(`Ошибка удаления фильма: ${err}`));
+    }
   }
 
   useEffect(() => {
