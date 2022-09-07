@@ -17,6 +17,7 @@ export default function Movies({
   findMovies,
   activateToggle,
   isToggleActiveMoives,
+  value
 }) {
   return (
     <>
@@ -38,6 +39,7 @@ export default function Movies({
           isSavedMoviesSection={isSavedMoviesSection}
           isMainMoviesSection={isMainMoviesSection}
           savedMovies={savedMovies}
+          value={value}
         />
       )}
     </>

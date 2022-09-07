@@ -11,6 +11,7 @@ export default function MoviesCardList({
   isLoading,
   isMainMoviesSection,
   savedMovies,
+  value
 }) {
   const windowMovies = window.location.pathname === "/movies";
   const innerWidth = window.innerWidth;
@@ -25,7 +26,7 @@ export default function MoviesCardList({
     } else {
       setCounter(5);
     }
-  }, []);
+  }, [value]);
 
   function checkCounter() {
     if (recivedMoives.length > counter) {

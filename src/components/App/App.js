@@ -25,6 +25,7 @@ function App() {
   const [errorMessageReg, setErrorMessageReg] = useState("");
   const [errorMessageLog, setErrorMessageLog] = useState("");
   const [confirmMessage, setConfirmMessage] = useState(false);
+  const [value, setValue] = useState('')
 
   const [recivedMoives, setRecivedMoives] = useState([]);
   const [savedMoives, setSavedMoives] = useState([]);
@@ -211,6 +212,7 @@ function App() {
   }, [isToggleActiveMoives, windowMovies]);
 
   function findMovies(value) {
+    setValue(value)
     if (windowMovies) {
       if (!!localStorage.getItem("isMoviesToggleActive")) {
         setIsToggleActiveMoives(true);
@@ -341,6 +343,7 @@ function App() {
                   findMovies={findMovies}
                   activateToggle={activateToggle}
                   isToggleActiveMoives={isToggleActiveMoives}
+                  value={value}
                 />
                 <Footer />
               </ProtectedRoute>
