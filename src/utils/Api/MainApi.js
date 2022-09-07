@@ -40,7 +40,7 @@ class Api {
     return await (res.ok ? res.json() : Promise.reject(res.status));
   }
 
-  saveMovie(
+  async saveMovie(
     country,
     director,
     duration,
@@ -54,7 +54,7 @@ class Api {
     movieId,
     token
   ) {
-    return fetch(`${this._baseUrl}/movies`, {
+    const res = await fetch(`${this._baseUrl}/movies`, {
       method: "POST",
       headers: {
         ...this._headers,
@@ -73,23 +73,25 @@ class Api {
         thumbnail,
         movieId,
       }),
-    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
+    });
+    return await (res.ok ? res.json() : Promise.reject(res.status));
   }
 
-  deleteMovie(id, token) {
-    return fetch(`${this._baseUrl}/movies/${id}`, {
+  async deleteMovie(id, token) {
+    const res = await fetch(`${this._baseUrl}/movies/${id}`, {
       method: "DELETE",
       headers: {
         ...this._headers,
         authorization: "Bearer " + token,
       },
-    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
+    });
+    return await (res.ok ? res.json() : Promise.reject(res.status));
   }
 }
 
 export const MainApi = new Api({
-  // baseUrl: "https://api.stan.nomoredomains.xyz",
-  baseUrl: "http://localhost:3001",
+  baseUrl: "https://api.stan.nomoredomains.xyz",
+  // baseUrl: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },

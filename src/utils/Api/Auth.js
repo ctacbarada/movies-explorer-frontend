@@ -1,5 +1,5 @@
-// export const BASE_URL = "https://api.stan.nomoredomains.xyz";
-export const BASE_URL = "http://localhost:3001";
+export const BASE_URL = "https://api.stan.nomoredomains.xyz";
+// export const BASE_URL = "http://localhost:3001";
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -7,7 +7,7 @@ const checkResponse = (res) => {
   }
 
   return res.json().then((data) => {
-    throw new Error(data.message);
+    throw new Error(data.message, data);
   });
 };
 

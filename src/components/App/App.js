@@ -15,13 +15,11 @@ import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
 import * as Auth from "../../utils/Api/Auth";
 import { MainApi } from "../../utils/Api/MainApi";
 import { MoviesApi } from "../../utils/Api/MoviesApi";
-import Preloader from "../Preloader/Preloader";
 
 function App() {
   const [isSavedMoviesSection, setIsSavedMoviesSection] = useState(true);
   const [isMainMoviesSection, setIsMainMoviesSection] = useState(true);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const [moreMovies, setMoreMovies] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [errorMessageReg, setErrorMessageReg] = useState("");
@@ -38,11 +36,9 @@ function App() {
   const windowLog = window.location.pathname === "/signup";
 
   const [isLoading, setIsLoading] = useState(false);
-  const [counter, setCounter] = useState(12);
 
   const [token, setToken] = useState("");
   const history = useNavigate();
-  const innerWidth = window.innerWidth;
   const url = "https://api.nomoreparties.co";
 
   function checkToken() {
@@ -176,16 +172,6 @@ function App() {
       .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
   }, [token, windowMovies, currentUser.user_id]);
 
-  useEffect(() => {
-    if (innerWidth > 769) {
-      setCounter(12);
-    } else if (innerWidth > 321) {
-      setCounter(8);
-    } else {
-      setCounter(5);
-    }
-  }, [innerWidth, isToggleActiveMoives]);
-
   function activateToggle(isToggleActive) {
     if (isToggleActive) {
       setIsToggleActiveMoives(true);
@@ -283,28 +269,7 @@ function App() {
     }
   }
 
-  function loadMoreMovies() {
-    console.log("counterFROMFUCNTION:", counter)
-    if (window.innerWidth >= 1140) {
-      setCounter(counter + 3);
-      if (counter >= recivedMoives.length) {
-        setMoreMovies(false);
-      }
-    } else if (window.innerWidth <= 1140 && window.innerWidth >= 768) {
-      setCounter(counter + 2);
-      if (counter >= recivedMoives.length) {
-        setMoreMovies(false);
-      }
-    } else if (window.innerWidth <= 765) {
-      setCounter(counter + 1);
-      if (counter >= recivedMoives.length) {
-        setMoreMovies(false);
-      }
-    }
-  }
-
   function handleSaveMovie(movie) {
-    checkToken();
     MainApi.saveMovie(
       movie.country,
       movie.director,
@@ -326,7 +291,6 @@ function App() {
   }
 
   function handleUnSaveMovie(savedMoive) {
-    checkToken();
     MainApi.deleteMovie(savedMoive._id, token)
       .then(() => {
         setSavedMoives((state) =>
@@ -371,9 +335,6 @@ function App() {
                   handleUnSaveMovie={handleUnSaveMovie}
                   recivedMoives={recivedMoives}
                   isLoading={isLoading}
-                  counter={counter}
-                  moreMovies={moreMovies}
-                  loadMoreMovies={loadMoreMovies}
                   isSavedMoviesSection={isSavedMoviesSection}
                   isMainMoviesSection={isMainMoviesSection}
                   savedMovies={savedMoives}
@@ -398,7 +359,6 @@ function App() {
                   handleUnSaveMovie={handleUnSaveMovie}
                   recivedMoives={savedMoives}
                   isLoading={isLoading}
-                  counter={counter}
                   isSavedMoviesSection={isSavedMoviesSection}
                   savedMovies={savedMoives}
                   findMovies={findMovies}
