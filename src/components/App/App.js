@@ -15,7 +15,7 @@ import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
 import * as Auth from "../../utils/Api/Auth";
 import { MainApi } from "../../utils/Api/MainApi";
 import { MoviesApi } from "../../utils/Api/MoviesApi";
-import { TrowUnauthorizedError } from "../../Errors/TrowUnauthorizedError";
+import { TrowUnauthorizedError } from "../../errors/TrowUnauthorizedError";
 
 function App() {
   const [isSavedMoviesSection, setIsSavedMoviesSection] = useState(true);
