@@ -1,0 +1,155 @@
+.moviescard {
+  position: relative;
+
+  margin: 0;
+}
+
+.moviescard__image {
+  width: 100%;
+  height: 201px;
+
+  object-fit: cover;
+  display: block;
+
+  border-radius: 6px;
+
+  margin: 0;
+}
+
+.moviescard__info {
+  height: 16px;
+
+  display: flex;
+  justify-content: space-between;
+
+  margin: 14px 14px 0;
+}
+
+.moviescard__save {
+  position: absolute;
+  width: 72px;
+  height: 21px;
+
+  border: none;
+  border-radius: 30px;
+
+  top: 14px;
+  right: 14px;
+
+  background-image: url(../../../images/moviescard__save.svg);
+
+  padding: 0;
+  margin: 0;
+}
+
+.moviescard__save:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s linear;
+  cursor: pointer;
+}
+
+.moviescard__saved {
+  position: absolute;
+  width: 21px;
+  height: 21px;
+
+  border: none;
+  border-radius: 30px;
+
+  top: 14px;
+  right: 14px;
+
+  background-image: url(../../../images/moviescard__saved.svg);
+
+  margin: 0;
+}
+
+.moviescard__saved:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s linear;
+  cursor: pointer;
+}
+
+.moviescard__remove {
+  position: absolute;
+  width: 21px;
+  height: 21px;
+
+  border: none;
+  border-radius: 30px;
+
+  top: 14px;
+  right: 14px;
+
+  background-image: url(../../../images/moviescard__remove.png);
+
+  margin: 0;
+}
+
+.moviescard__remove:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s linear;
+  cursor: pointer;
+}
+
+.moviescard__title {
+  font-size: 13px;
+  line-height: 16px;
+
+  margin: 0;
+}
+
+.moviescard__time {
+  width: 52px;
+  height: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #f4f4f4;
+  color: #a0a0a0;
+
+  font-size: 11px;
+  line-height: 10px;
+
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .moviescard__image {
+    height: 190px;
+  }
+
+  .moviescard__info {
+    margin: 25px 0 0 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .moviescard__image {
+    height: 168px;
+  }
+
+  .moviescard__info {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 16px 0 0 0;
+  }
+
+  .moviescard__save {
+    top: 10px;
+    right: 10px;
+  }
+
+  .moviescard__saved {
+    top: 10px;
+    right: 10px;
+  }
+
+  .moviescard__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
