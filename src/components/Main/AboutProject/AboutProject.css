@@ -106,7 +106,7 @@
   }
 
   .aboutproject__card {
-    grid-template-columns: repeat(2, calc(100vw * (319 / 768)));
+    /* grid-template-columns: repeat(2, calc(100vw * (319 / 768))); */
     column-gap: 30px;
     row-gap: 22px;
   }

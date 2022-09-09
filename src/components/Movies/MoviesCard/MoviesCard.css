@@ -60,6 +60,10 @@
   top: 14px;
   right: 14px;
 
+  font-family: none;
+  font-size: none;
+  line-height: none;
+
   background-image: url(../../../images/moviescard__saved.svg);
   background-repeat: no-repeat;
 
