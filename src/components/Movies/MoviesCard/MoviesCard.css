@@ -37,6 +37,7 @@
   right: 14px;
 
   background-image: url(../../../images/moviescard__save.svg);
+  background-repeat: no-repeat;
 
   padding: 0;
   margin: 0;
@@ -60,6 +61,7 @@
   right: 14px;
 
   background-image: url(../../../images/moviescard__saved.svg);
+  background-repeat: no-repeat;
 
   margin: 0;
 }
@@ -82,6 +84,7 @@
   right: 14px;
 
   background-image: url(../../../images/moviescard__remove.png);
+  background-repeat: no-repeat;
 
   margin: 0;
 }
