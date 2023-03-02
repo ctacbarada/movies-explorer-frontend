@@ -24,7 +24,7 @@ export default function Navigation({ isOpen, onClose }) {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            Главная
+            Home
           </Link>
           <div className="navigation__underline"></div>
         </div>
@@ -36,7 +36,7 @@ export default function Navigation({ isOpen, onClose }) {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            Фильмы
+            Movies
           </Link>
           <div className="navigation__underline"></div>
         </div>
@@ -48,7 +48,7 @@ export default function Navigation({ isOpen, onClose }) {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            Сохранённые фильмы
+            Saved movies
           </Link>
           <div className="navigation__underline"></div>
         </div>

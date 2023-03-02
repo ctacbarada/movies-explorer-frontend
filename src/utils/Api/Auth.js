@@ -1,5 +1,5 @@
-// export const BASE_URL = "https://api.stan.nomoredomains.xyz";
-export const BASE_URL = "http://localhost:3001";
+export const BASE_URL = "https://movie-explorer.onrender.com";
+// export const BASE_URL = "http://localhost:3000";
 
 const checkResponse = (res) => {
   if (res.ok) {

@@ -5,10 +5,10 @@ function NavTab() {
   return (
     <section className="navtab">
       <a href="#aboutproject" className="navtab__item">
-        О проекте
+      About
       </a>
-      <a href="#techs" className="navtab__item">Технологии</a>
-      <a href="#aboutme" className="navtab__item">Студент</a>
+      <a href="#techs" className="navtab__item">Technologies</a>
+      <a href="#aboutme" className="navtab__item">Student</a>
     </section>
   );
 }

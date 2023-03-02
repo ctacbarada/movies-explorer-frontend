@@ -5,7 +5,7 @@ function Promo() {
   return (
     <section className="promo">
       <h1 className="promo__title">
-        Учебный проект студента факультета Веб-разработки.
+        Educational project of a student of the Faculty of Web Development.
       </h1>
       <NavTab />
     </section>

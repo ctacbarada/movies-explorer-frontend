@@ -5,11 +5,11 @@ export default function Footer() {
   return (
     <footer className="footer">
       <p className="footer__title">
-        Учебный проект Яндекс.Практикум х BeatFilm.
+        Educational project Yandex.Practicum x BeatFilm.
       </p>
       <div className="footer__navigation">
         <div className="footer__links">
-          <p className="footer__link">Яндекс.Практикум</p>
+          <p className="footer__link">Yandex.Practicum</p>
           <p className="footer__link">Github</p>
           <p className="footer__link">Facebook</p>
         </div>

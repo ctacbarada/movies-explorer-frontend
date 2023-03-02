@@ -15,7 +15,7 @@ import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
 import * as Auth from "../../utils/Api/Auth";
 import { MainApi } from "../../utils/Api/MainApi";
 import { MoviesApi } from "../../utils/Api/MoviesApi";
-import { TrowUnauthorizedError } from "../../errors/TrowUnauthorizedError";
+import { TrowUnauthorizedError } from "../../Errors/TrowUnauthorizedError";
 
 function App() {
   const [isSavedMoviesSection, setIsSavedMoviesSection] = useState(true);
@@ -43,12 +43,6 @@ function App() {
   const history = useNavigate();
   const url = "https://api.nomoreparties.co";
 
-  // function checkTokenValidity() {
-  //   if (token !== localStorage.getItem("jwt")) {
-  //     handleSignOut()
-  //   }
-  // }
-
   function checkToken() {
     if (localStorage.getItem("jwt")) {
       const jwt = localStorage.getItem("jwt");
@@ -61,7 +55,7 @@ function App() {
           }
         })
         .catch((err) => {
-          console.log(`Ошибка токена: ${err}`);
+          console.log(`Token error: ${err}`);
           handleSignOut();
         });
     }
@@ -75,7 +69,7 @@ function App() {
         history("/movies");
       })
       .catch((error) => {
-        console.log("Ошибка регистрации:");
+        console.log("Registration error:");
         setErrorMessageReg(error.message);
       });
   }
@@ -91,7 +85,7 @@ function App() {
         }
       })
       .catch((error) => {
-        console.log("Ошибка авторизации:");
+        console.log("Authorisation Error:");
         setErrorMessageLog(error.message);
       });
   }
@@ -103,7 +97,7 @@ function App() {
 
   function handleUpdateUser(name, email) {
     if (token !== localStorage.getItem("jwt")) {
-      throw new TrowUnauthorizedError("Ошибка токена");
+      throw new TrowUnauthorizedError("Token error");
     } else {
       MainApi.setUserInfo(name, email, token)
         .then((res) => {
@@ -111,8 +105,8 @@ function App() {
           setConfirmMessage(true);
         })
         .catch((error) => {
-          console.log(`Ошибка редактирования профиля: ${error}`);
-          setErrorMessage("Пользователь с такой почтой уже существует");
+          console.log(`Profile editing error: ${error}`);
+          setErrorMessage("User with this email already exists");
         });
     }
   }
@@ -131,7 +125,7 @@ function App() {
           localStorage.setItem("recivedMoives", JSON.stringify(res));
           localStorage.setItem("lastFoundMovies", JSON.stringify(res));
         })
-        .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
+        .catch((err) => console.log(`Movie download error: ${err}`));
     } else {
       setIsLoading(true);
       localStorage.getItem("valueMovies")
@@ -181,7 +175,7 @@ function App() {
         setSavedMoives(movie);
         setCopySavedMoives(movie);
       })
-      .catch((err) => console.log(`Ошибка загрузки фильмов: ${err}`));
+      .catch((err) => console.log(`Movie download error: ${err}`));
   }, [token, windowMovies, currentUser.user_id]);
 
   function activateToggle(isToggleActive) {
@@ -284,7 +278,7 @@ function App() {
 
   function handleSaveMovie(movie) {
     if (token !== localStorage.getItem("jwt")) {
-      throw new TrowUnauthorizedError("Ошибка токена");
+      throw new TrowUnauthorizedError("Token error");
     } else {
       MainApi.saveMovie(
         movie.country,
@@ -303,13 +297,13 @@ function App() {
         .then((newMovie) => {
           setSavedMoives([newMovie, ...savedMoives]);
         })
-        .catch((err) => console.log(`Ошибка сохранения фильма: ${err}`));
+        .catch((err) => console.log(`Movie save error: ${err}`));
     }
   }
 
   function handleUnSaveMovie(savedMoive) {
     if (token !== localStorage.getItem("jwt")) {
-      throw new TrowUnauthorizedError("Ошибка токена");
+      throw new TrowUnauthorizedError("Token error");
     } else {
       MainApi.deleteMovie(savedMoive._id, token)
         .then(() => {
@@ -319,7 +313,7 @@ function App() {
             })
           );
         })
-        .catch((err) => console.log(`Ошибка удаления фильма: ${err}`));
+        .catch((err) => console.log(`Movie deletion error: ${err}`));
     }
   }
 

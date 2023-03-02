@@ -26,19 +26,19 @@ export default function Register({ handleRegister, errorMessageReg }) {
   return (
     <section className="register">
       <Link to="/" className="register__logo"></Link>
-      <h2 className="register__title">Добро пожаловать!</h2>
+      <h2 className="register__title">Welcome!</h2>
       <form className="register__form" onSubmit={handleSubmit(onSubmit)}>
-        <p className="register__name">Имя</p>
+        <p className="register__name">Name</p>
         <input
           {...register("registrationName", {
-            required: "Введите имя",
+            required: "Enter your name",
             minLength: {
               value: 2,
-              message: "Минимум 2 символа",
+              message: "Minimum 2 characters",
             },
             maxLength: {
               value: 30,
-              message: "Максимум 30 символа",
+              message: "Maximum 30 characters",
             },
           })}
           className="register__input"
@@ -51,10 +51,10 @@ export default function Register({ handleRegister, errorMessageReg }) {
         <p className="register__name">E-mail</p>
         <input
           {...register("registrationEmail", {
-            required: "Введите e-mail",
+            required: "Enter e-mail",
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Email должен быть с @",
+              message: "Email must be with @",
             },
           })}
           className="register__input"
@@ -64,26 +64,26 @@ export default function Register({ handleRegister, errorMessageReg }) {
         <span className="register__errors">
           {errors?.registrationEmail?.message}
         </span>
-        <p className="register__name">Пароль</p>
+        <p className="register__name">Password</p>
         <input
           {...register("registrationPassword", {
-            required: "Введите password",
+            required: "Enter password",
           })}
           className="register__input"
           type="password"
           placeholder="Password"
         />
         <span className="register__errors">
-          {errors?.registrationPassword && "Введите password"}
+          {errors?.registrationPassword && "Enter password"}
         </span>
         <span className="register__error">{errorMessageReg}</span>
         <button className="register__signup" type="submit">
-          Зарегистрироваться
+          Register
         </button>
         <p className="register__signup-question">
-          Уже зарегистрированы?
+          Already registered?
           <Link to="/signin" className="register__signin">
-            Войти
+            To come in
           </Link>
         </p>
       </form>

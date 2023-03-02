@@ -45,17 +45,17 @@ export default function SearchForm({
           {...register(
             windowMovies ? "inputFindMovie" : "inputFindSavedMovie",
             {
-              required: "Нужно ввести ключевое слово",
+              required: "Keyword required",
             }
           )}
           className="searchform__input"
           type="text"
-          placeholder="Фильм"
+          placeholder="Movie"
         />
         <button
           className="searchform__button-confirm"
           type="submit"
-          aria-label="Поиск"
+          aria-label="Search"
         />
         <button
           className={
@@ -64,24 +64,24 @@ export default function SearchForm({
               : "searchform__toggle-enabled searchform__toggle-disabled"
           }
           type="button"
-          aria-label="Короткометражки"
+          aria-label="Short films"
           onClick={() => {
             setIsToggleActive(!isToggleActive);
             activateToggle(!isToggleActive);
           }}
         />
-        <p className="searchform__toggle-name">Короткометражки</p>
+        <p className="searchform__toggle-name">Short films</p>
       </form>
       {windowMovies
         ? errors?.inputFindMovie && (
-            <p className="searchform__errors">Нужно ввести ключевое слово</p>
+            <p className="searchform__errors">Keyword required</p>
           )
         : errors?.inputFindSavedMovie && (
-            <p className="searchform__errors">Нужно ввести ключевое слово</p>
+            <p className="searchform__errors">Keyword required</p>
           )}
       {recivedMoives
         ? recivedMoives.length === 0 && (
-            <p className="searchform__errors">Ничего не найдено</p>
+            <p className="searchform__errors">Nothing found</p>
           )
         : null}
     </section>

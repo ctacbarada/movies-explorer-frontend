@@ -8,9 +8,9 @@ export default function NotFoundPage() {
   return (
     <section className="notfoundpage">
       <h2 className="notfoundpage__title">404</h2>
-      <p className="notfoundpage__text">Страница не найдена</p>
+      <p className="notfoundpage__text">Page not found</p>
       <button className="notfoundpage__back" onClick={() => navigate(-1)}>
-        Назад
+        Back
       </button>
     </section>
   );

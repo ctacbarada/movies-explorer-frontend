@@ -11,7 +11,7 @@ export default function MoviesCardList({
   isLoading,
   isMainMoviesSection,
   savedMovies,
-  value
+  value,
 }) {
   const windowMovies = window.location.pathname === "/movies";
   const innerWidth = window.innerWidth;
@@ -68,7 +68,7 @@ export default function MoviesCardList({
   return isLoading ? (
     windowMovies ? (
       <>
-        <section className="moviescardlist" aria-label="Фильмы">
+        <section className="moviescardlist" aria-label="Movies">
           {recivedMoives.slice(0, counter).map((movie, i) => (
             <MoviesCard
               movie={movie}
@@ -83,7 +83,7 @@ export default function MoviesCardList({
         {moreMovies ? <MoreMovies loadMoreMovies={loadMoreMovies} /> : null}
       </>
     ) : (
-      <section className="moviescardlist" aria-label="Фильмы">
+      <section className="moviescardlist" aria-label="Movies">
         {recivedMoives.map((movie, i) => (
           <MoviesCard
             movie={movie}

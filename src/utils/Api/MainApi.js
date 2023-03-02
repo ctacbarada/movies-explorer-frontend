@@ -90,8 +90,8 @@ class Api {
 }
 
 export const MainApi = new Api({
-  // baseUrl: "https://api.stan.nomoredomains.xyz",
-  baseUrl: "http://localhost:3001",
+  baseUrl: "https://movie-explorer.onrender.com",
+  // baseUrl: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
   },

@@ -9,6 +9,8 @@ export default function MoviesCard({
   isMainMoviesSection,
   savedMovies,
 }) {
+
+  console.log("movie", movie)
   const currentUser = useContext(CurrentUserContext);
   const [isSaved, setIsSaved] = useState(false);
   const [savedMovie, setSavedMovie] = useState([]);
@@ -56,7 +58,7 @@ export default function MoviesCard({
           <img
             className="moviescard__image"
             src={movie.image.url ? `${url}/${movie.image.url}` : movie.image}
-            alt={movie.nameRU}
+            alt={movie.nameEN}
           />
         </a>
 
@@ -71,7 +73,7 @@ export default function MoviesCard({
           <button className="moviescard__save" onClick={saveMovie} />
         )}
         <div className="moviescard__info">
-          <p className="moviescard__title">{movie.nameRU}</p>
+          <p className="moviescard__title">{movie.nameEN}</p>
           <p className="moviescard__time">{time}</p>
         </div>
       </div>

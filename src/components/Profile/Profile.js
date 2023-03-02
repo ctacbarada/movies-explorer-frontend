@@ -34,13 +34,13 @@ export default function Profile({
     ) {
       return (
         <button className="profile__edit-button" type="submit" disabled>
-          Редактировать
+          Edit
         </button>
       );
     } else {
       return (
         <button className="profile__edit-button" type="submit">
-          Редактировать
+          Edit
         </button>
       );
     }
@@ -70,25 +70,25 @@ export default function Profile({
 
   return (
     <section className="profile">
-      <div className="profile__title">Привет, {currentUser.name}!</div>
+      <div className="profile__title">Hello, {currentUser.name}!</div>
       <form className="profile__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="profile__string">
-          <p className="profile__string-name">Имя</p>
+          <p className="profile__string-name">Name</p>
           <input
             {...register("profileName", {
-              required: "Введите имя",
+              required: "Enter your name",
               minLength: {
                 value: 2,
-                message: "Минимум 2 символа",
+                message: "Minimum 2 characters",
               },
               maxLength: {
                 value: 30,
-                message: "Максимум 30 символа",
+                message: "Maximum 30 characters",
               },
             })}
             className="profile__input"
             type="text"
-            placeholder="Имя"
+            placeholder="Name"
           />
         </div>
         <span className="profile__errors">{errors?.profileName?.message}</span>
@@ -96,10 +96,10 @@ export default function Profile({
           <p className="profile__string-name">E-mail</p>
           <input
             {...register("profileEmail", {
-              required: "Введите e-mail",
+              required: "Enter e-mail",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Email должен быть с @",
+                message: "Email must be with @",
               },
             })}
             className="profile__input"
@@ -109,12 +109,12 @@ export default function Profile({
         </div>
         <span className="profile__errors">{errors?.profileEmail?.message}</span>
         <span className="profile__confirm-message">
-          {confirmMessage ? "Данные обновлены" : ""}
+          {confirmMessage ? "Data updated" : ""}
           {errorMessage ? errorMessage : ""}
         </span>
         {checkValidity()}
         <Link to="/" className="profile__logout" onClick={handleSignOut}>
-          Выйти из аккаунта
+          Sign out
         </Link>
       </form>
     </section>

@@ -4,26 +4,26 @@ import "./AboutProject.css";
 export default function AboutProject() {
   return (
     <section className="aboutproject" id="aboutproject">
-      <p className="aboutproject__title">О проекте</p>
+      <p className="aboutproject__title">About</p>
       <div className="aboutproject__card">
         <h3 className="aboutproject__card-title">
-          Дипломный проект включал 5&nbsp;этапов
+          The graduation project included 5 stages
         </h3>
         <h3 className="aboutproject__card-title">
-          На&nbsp;выполнение диплома ушло 5&nbsp;недель
+          It took &nbsp;5 weeks to complete the diploma
         </h3>
         <p className="aboutproject__card-text">
-          Составление плана, работу над бэкендом, вёрстку, добавление
-          функциональности и&nbsp;финальные доработки.
+          Drawing up a plan, working on the backend, layout, adding
+          functionality and final improvements.
         </p>
         <p className="aboutproject__card-text">
-          У&nbsp;каждого этапа был мягкий и&nbsp;жёсткий дедлайн, которые нужно
-          было соблюдать, чтобы успешно защититься.
+          Each stage had a soft and hard deadline that had to be met in order to
+          successfully defend.
         </p>
       </div>
       <div className="aboutproject__infographic">
-        <div className="aboutproject__infographic-title">1 неделя</div>
-        <div className="aboutproject__infographic-title">4 недели</div>
+        <div className="aboutproject__infographic-title">1 Week</div>
+        <div className="aboutproject__infographic-title">4 Week</div>
         <p className="aboutproject__infographic-text">Back-end</p>
         <p className="aboutproject__infographic-text">Front-end</p>
       </div>

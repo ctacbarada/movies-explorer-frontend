@@ -44,7 +44,7 @@ function Header({
               onMouseLeave={handleMouseLeave}
               onClick={onClickHeaderMovies}
             >
-              Фильмы
+              Movies
             </NavLink>
             <div className="header__underline"></div>
           </div>
@@ -60,7 +60,7 @@ function Header({
               onMouseLeave={handleMouseLeave}
               onClick={onClickHeaderSavedMovies}
             >
-              Сохранённые фильмы
+              Saved Movies
             </NavLink>
             <div className="header__underline"></div>
           </div>
@@ -78,10 +78,10 @@ function Header({
       <Link to="/" className="header__logo" />
       <div className="header__auth">
         <Link to="/signup" className="header__registration">
-          Регистрация
+          Registration
         </Link>
         <Link to="/signin" className="header__login">
-          Войти
+          Sign in
         </Link>
       </div>
     </header>

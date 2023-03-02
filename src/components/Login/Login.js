@@ -22,15 +22,15 @@ export default function Login({ handleLogin, errorMessageLog }) {
   return (
     <section className="login">
       <Link to="/" className="login__logo"></Link>
-      <h2 className="login__title">Рады видеть!</h2>
+      <h2 className="login__title">Glad to see!</h2>
       <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
         <p className="login__name">E-mail</p>
         <input
           {...register("loginEmail", {
-            required: "Введите e-mail",
+            required: "Enter e-mail",
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Email должен быть с @",
+              message: "Email must be with @",
             },
           })}
           className="login__input"
@@ -38,26 +38,26 @@ export default function Login({ handleLogin, errorMessageLog }) {
           placeholder="E-mail"
         />
         <span className="login__errors">{errors?.loginEmail?.message}</span>
-        <p className="login__name">Пароль</p>
+        <p className="login__name">Password</p>
         <input
           {...register("loginPassword", {
-            required: "Введите password",
+            required: "Enter password",
           })}
           className="login__input"
           type="password"
           placeholder="Password"
         />
         <span className="login__errors">
-          {errors?.loginPassword && "Введите password"}
+          {errors?.loginPassword && "Enter password"}
         </span>
         <span className="login__error">{errorMessageLog}</span>
         <button className="login__signup" type="submit">
-          Войти
+          Sign in
         </button>
         <p className="login__signup-question">
-          Ещё не зарегистрированы?
+          Not registered yet?
           <Link to="/signup" className="login__signin">
-            Регистрация
+            Registration
           </Link>
         </p>
       </form>

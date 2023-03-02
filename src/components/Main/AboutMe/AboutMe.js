@@ -4,17 +4,19 @@ import "./AboutMe.css";
 export default function AboutMe() {
   return (
     <section className="aboutme" id="aboutme">
-      <div className="aboutme__header">Студент</div>
+      <div className="aboutme__header">Student</div>
       <div className="aboutme__profile">
         <div className="aboutme__profile-info">
-          <h2 className="aboutme__name">Виталий</h2>
-          <p className="aboutme__specialis">Фронтенд-разработчик, 30 лет</p>
+          <h2 className="aboutme__name">Stanislav</h2>
+          <p className="aboutme__specialis">
+            Front-end developer, 30 years old
+          </p>
           <p className="aboutme__bio">
-            Я родился и живу в Саратове, закончил факультет экономики СГУ. У
-            меня есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь
-            бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ
-            Контур». После того, как прошёл курс по веб-разработке, начал
-            заниматься фриланс-заказами и ушёл с постоянной работы.
+            I like data processing and visualization in web development. I
+            strive to create user-friendly interfaces. I read blogs of web
+            developers and solve puzzles on Codewars. In my free time, I make my
+            pet project through the Twitter API or i'm going outside to make
+            some shot witch my fotocamera.
           </p>
           <div className="aboutme__links">
             <p className="aboutme__link">Facebook</p>
