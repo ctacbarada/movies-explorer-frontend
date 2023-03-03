@@ -75,6 +75,8 @@
   height: 327px;
   background-image: url(../../../images/aboutme__avatar.png);
   border-radius: 10px;
+  background-repeat: no-repeat;
+  background-size: contain;
 
   margin: 0;
 }
@@ -128,8 +130,6 @@
   .aboutme__avatar {
     width: 255px;
     height: 307px;
-    background-image: url(../../../images/aboutme__avatar.png);
-    background-size: contain;
 
     margin: 0;
   }
@@ -204,7 +204,5 @@
     grid-row: 1;
     width: 292px;
     height: 352px;
-    background-image: url(../../../images/aboutme__avatar.png);
-    background-repeat: no-repeat;
   }
 }
