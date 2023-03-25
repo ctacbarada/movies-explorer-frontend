@@ -90,7 +90,7 @@ class Api {
 }
 
 export const MainApi = new Api({
-  baseUrl: "https://movie-explorer.onrender.com",
+  baseUrl: "https://movie-expol-api.fly.dev",
   // baseUrl: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
